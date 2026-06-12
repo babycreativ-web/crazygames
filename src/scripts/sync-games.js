@@ -30,21 +30,8 @@ async function syncGames() {
     console.log(`Fetched ${liveGames.length} games from the feed.`);
 
     // 2. Load existing games to preserve self-hosted entries
-    let currentGames = [];
-    if (fs.existsSync(DATA_FILE_PATH)) {
-      try {
-        currentGames = JSON.parse(fs.readFileSync(DATA_FILE_PATH, "utf8"));
-      } catch (e) {
-        console.warn("Could not read existing games file or it was empty. Starting fresh.");
-      }
-    }
-
-    // Filter out existing self-hosted games to preserve them
-    const selfHostedGames = currentGames.filter(
-      (game) => game.id.startsWith("self-hosted-") || game.url.startsWith("/")
-    );
-
-    console.log(`Preserving ${selfHostedGames.length} self-hosted game(s).`);
+    // (Self-hosted game support disabled as requested)
+    const selfHostedGames = [];
 
     // 3. Normalize and map the feed games to match our Game interface
     const mappedGames = liveGames.map((game) => ({

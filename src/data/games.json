@@ -1,17 +1,5 @@
 [
   {
-    "id": "self-hosted-snake",
-    "title": "Arcade Snake (Self-Hosted)",
-    "description": "A classic retro HTML5 Snake game hosted locally on our own servers. Control the snake, eat apples to grow, and try to score a new high score. Demonstrates self-hosted HTML5 game files integration, local score saves, and message passing.",
-    "instructions": "Use Arrow Keys or WASD to control the snake. Do not run into yourself or the walls!",
-    "url": "/games/snake/index.html",
-    "category": "Arcade",
-    "tags": "Snake, Arcade, Classic, Retro, Self-Hosted",
-    "thumb": "https://images.unsplash.com/photo-1628277613967-6abca504d0ac?w=512&auto=format&fit=crop&q=60",
-    "width": "400",
-    "height": "400"
-  },
-  {
     "id": "80398",
     "title": "Skygarden Siege",
     "description": "Skygarden Siege is a casual arcade shmup where nature fights back against the Iron Fleet. Take control of a Skygarden guardian ship, dodge enemy attacks and defend the floating gardens from mechanical invaders. Collect Light Blossoms, unlock upgrades and push deeper into the conflict between nature and machine.",
@@ -1198,5 +1186,17 @@
     "thumb": "https://img.gamemonetize.com/b8oh3al9pfcfq6ji4iryba3peehvymod/512x384.jpg",
     "width": "1280",
     "height": "720"
+  },
+  {
+    "id": "76295",
+    "title": "House Paint Challenge",
+    "description": "Paint House Challenge is an exterior wall color changer that is ideal for houses and buildings. Just take a photo, select a color, and paint the exterior wall with a single tap. Whether its a rural cottage, modern house, or a sleek designers villa, find the perfect shade with the vast color palette to paint your building. Now you can test and try wall colors before painting. Visualize how the palette color with the simulator looks in your house, villa, or home. Virtually paint your walls to see exactly how your chosen colors will fit with your garden and surroundings. For your exterior projects, our app is your design and renovation planner",
+    "instructions": "Mouse click or tap to play",
+    "url": "https://html5.gamemonetize.co/d5yymum1ygbx4ft8az81lg4ogpdbsno5/",
+    "category": "Puzzle",
+    "tags": "2026 games, Block, Brain, Coloring, House, html5 games, Logic, paint, painting, Puzzle, Relaxation, WebGL",
+    "thumb": "https://img.gamemonetize.com/d5yymum1ygbx4ft8az81lg4ogpdbsno5/512x384.jpg",
+    "width": "800",
+    "height": "600"
   }
 ]
