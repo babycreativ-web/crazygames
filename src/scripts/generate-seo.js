@@ -143,8 +143,8 @@ async function generateSeoForGames() {
       fs.writeFileSync(SEO_FILE, JSON.stringify(seoData, null, 2), "utf8");
       console.log(`✓ Completed: "${game.title}"`);
 
-      // Rate limit buffer (sleep 4.5 seconds to avoid quota errors - max 15 RPM)
-      await new Promise((resolve) => setTimeout(resolve, 4500));
+      // Rate limit buffer (sleep 6.5 seconds to avoid quota errors - max 15 RPM)
+      await new Promise((resolve) => setTimeout(resolve, 6500));
 
     } catch (err) {
       console.error(`✗ Failed generating for "${game.title}":`, err.message);
