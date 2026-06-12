@@ -72,6 +72,35 @@ export default function GamePlayClient({
     };
   }, [game.id]);
 
+  // Prevent page scroll when pressing Arrow keys or Spacebar on play page
+  useEffect(() => {
+    const handleScrollKeys = (e: KeyboardEvent) => {
+      const activeEl = document.activeElement;
+      if (
+        activeEl &&
+        (activeEl.tagName === "INPUT" ||
+          activeEl.tagName === "TEXTAREA" ||
+          (activeEl as HTMLElement).isContentEditable)
+      ) {
+        return; // Allow typing in search or text inputs
+      }
+
+      // Keys that trigger browser scrolling
+      const keysToBlock = ["Space", "ArrowUp", "ArrowDown", "PageUp", "PageDown"];
+      if (
+        keysToBlock.includes(e.code) ||
+        ["ArrowUp", "ArrowDown", "PageUp", "PageDown", " "].includes(e.key)
+      ) {
+        e.preventDefault();
+      }
+    };
+
+    window.addEventListener("keydown", handleScrollKeys);
+    return () => {
+      window.removeEventListener("keydown", handleScrollKeys);
+    };
+  }, []);
+
   const toggleFavorite = () => {
     try {
       const saved = localStorage.getItem("favorites_games");
@@ -156,7 +185,14 @@ export default function GamePlayClient({
           <iframe
             id="game-iframe"
             src={game.url}
-            onLoad={() => setIframeLoading(false)}
+            onLoad={() => {
+              setIframeLoading(false);
+              // Auto-focus the game iframe so key events go directly to the game
+              const iframe = document.getElementById("game-iframe");
+              if (iframe) {
+                iframe.focus();
+              }
+            }}
             className="h-full w-full border-none z-10 bg-slate-950"
             allow="autoplay; gamepad; keyboard-map; accelerometer; gyroscope; payment; screen-wake-lock; web-share; fullscreen"
             scrolling="no"
