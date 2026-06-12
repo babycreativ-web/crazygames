@@ -79,7 +79,7 @@ export default function Header({ onToggleSidebar, sidebarOpen }: HeaderProps) {
     const games = gamesData as Game[];
     if (games.length > 0) {
       const randomGame = games[Math.floor(Math.random() * games.length)];
-      router.push(`/game/${randomGame.id}`);
+      router.push(`/game/${randomGame.slug || randomGame.id}`);
       setSearchQuery("");
       setShowDropdown(false);
     }
@@ -139,7 +139,7 @@ export default function Header({ onToggleSidebar, sidebarOpen }: HeaderProps) {
               {searchResults.map((game) => (
                 <Link
                   key={game.id}
-                  href={`/game/${game.id}`}
+                  href={`/game/${game.slug || game.id}`}
                   onClick={() => {
                     setSearchQuery("");
                     setShowDropdown(false);

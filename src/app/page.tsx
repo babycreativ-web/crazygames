@@ -224,7 +224,7 @@ export default function Home() {
 
               <div className="mt-2 flex flex-wrap items-center justify-center md:justify-start gap-4">
                 <Link
-                  href={`/game/${featuredGame.id}`}
+                  href={`/game/${featuredGame.slug || featuredGame.id}`}
                   className="flex items-center gap-2 rounded-full bg-gradient-to-r from-violet-600 to-pink-500 px-6 py-2.5 text-xs font-bold text-white shadow-lg shadow-violet-500/25 hover:from-violet-500 hover:to-pink-400 transition-all hover:scale-105"
                 >
                   <Play className="h-4 w-4 fill-white ml-0.5" />

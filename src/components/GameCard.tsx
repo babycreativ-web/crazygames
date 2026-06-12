@@ -62,7 +62,7 @@ export default function GameCard({ game }: GameCardProps) {
 
   return (
     <Link
-      href={`/game/${game.id}`}
+      href={`/game/${game.slug || game.id}`}
       className="group relative flex flex-col overflow-hidden rounded-xl border border-white/5 bg-slate-900/40 p-2 transition-all duration-300 hover:border-violet-500/30 hover:bg-slate-900 hover:shadow-xl hover:shadow-violet-500/5 hover:-translate-y-1"
     >
       {/* Thumbnail Container */}

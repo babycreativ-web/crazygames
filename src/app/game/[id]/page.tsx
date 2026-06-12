@@ -3,11 +3,15 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Game } from "@/types";
 import gamesData from "@/data/games.json";
-import gamesSeoData from "@/data/games-seo.json";
+import { getOrGenerateGameSeo } from "@/utils/seo-fallback";
 import GamePlayClient from "./GamePlayClient";
 
 interface GamePageProps {
   params: Promise<{ id: string }>;
+}
+
+function stripHtml(html: string): string {
+  return html.replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim();
 }
 
 function getCategoryKeyword(category: string): string {
@@ -28,7 +32,8 @@ export async function generateMetadata({
 }: GamePageProps): Promise<Metadata> {
   const resolvedParams = await params;
   const gameId = resolvedParams.id;
-  const game = (gamesData as Game[]).find((g) => g.id === gameId);
+  const allGames = gamesData as Game[];
+  const game = allGames.find((g) => g.id === gameId || g.slug === gameId);
 
   if (!game) {
     return {
@@ -36,9 +41,8 @@ export async function generateMetadata({
     };
   }
 
-  const seoEntries = gamesSeoData as Record<string, any>;
-  const seoEntry = seoEntries?.[game.id];
-  const description = seoEntry?.seoDescription || game.description || "";
+  const seoEntry = getOrGenerateGameSeo(game, allGames);
+  const plainDescription = stripHtml(seoEntry.seoDescription);
   const keywords = game.tags 
     ? `${game.title}, play ${game.title}, free online games, HTML5 games, browser games, ${game.category.toLowerCase()}, ${game.tags}`
     : `${game.title}, play ${game.title}, free online games, HTML5 games, browser games, ${game.category.toLowerCase()}`;
@@ -48,18 +52,18 @@ export async function generateMetadata({
 
   return {
     title: pageTitle,
-    description: description.slice(0, 160).trim(),
+    description: plainDescription.slice(0, 160).trim(),
     keywords: keywords,
     openGraph: {
       title: pageTitle,
-      description: description.slice(0, 160).trim(),
+      description: plainDescription.slice(0, 160).trim(),
       images: [{ url: game.thumb }],
       type: "website",
     },
     twitter: {
       card: "summary_large_image",
       title: pageTitle,
-      description: description.slice(0, 160).trim(),
+      description: plainDescription.slice(0, 160).trim(),
       images: [game.thumb],
     },
   };
@@ -68,17 +72,17 @@ export async function generateMetadata({
 export default async function GamePage({ params }: GamePageProps) {
   const resolvedParams = await params;
   const gameId = resolvedParams.id;
-  const game = (gamesData as Game[]).find((g) => g.id === gameId);
+  const allGames = gamesData as Game[];
+  const game = allGames.find((g) => g.id === gameId || g.slug === gameId);
 
   if (!game) {
     notFound();
   }
 
-  const seoEntries = gamesSeoData as Record<string, any>;
-  const seoEntry = seoEntries?.[game.id] || null;
+  const seoEntry = getOrGenerateGameSeo(game, allGames);
 
-  // Find related games in same category
-  const relatedGames = (gamesData as Game[])
+  // Find related games in same category, matching by category and excluding current game
+  const relatedGames = allGames
     .filter((g) => g.category === game.category && g.id !== game.id)
     .slice(0, 6);
 
@@ -90,3 +94,4 @@ export default async function GamePage({ params }: GamePageProps) {
     />
   );
 }
+

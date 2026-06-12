@@ -6,8 +6,7 @@ import { Game } from "@/types";
 import gamesData from "@/data/games.json";
 import GameCard from "@/components/GameCard";
 import { Gamepad, Sparkles, HelpCircle } from "lucide-react";
-import fs from "fs";
-import path from "path";
+import { getOrGenerateCategorySeo } from "@/utils/seo-fallback";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -31,21 +30,6 @@ function resolveCategoryName(id: string): string | null {
   return null;
 }
 
-// Safely load category SEO data
-function loadCategorySeo(categoryName: string) {
-  try {
-    const filePath = path.join(process.cwd(), "src/data/categories-seo.json");
-    if (fs.existsSync(filePath)) {
-      const seoData = JSON.parse(fs.readFileSync(filePath, "utf8"));
-      const seoKey = categoryName.toLowerCase().replace(/\s+/g, "-");
-      return seoData[seoKey] || null;
-    }
-  } catch (e) {
-    console.error("Failed to load category SEO file:", e);
-  }
-  return null;
-}
-
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const resolvedParams = await params;
   const categoryName = resolveCategoryName(resolvedParams.id);
@@ -56,20 +40,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
-  const seoEntry = loadCategorySeo(categoryName);
-  
+  let gamesCount = 0;
   if (categoryName === "Unblocked") {
-    return {
-      title: "Play Free Unblocked Games Online - Best Web Browser Games | CrazyArcade",
-      description: "Play thousands of free online unblocked HTML5 games directly in your browser. Action, arcade, driving, puzzle and 2 player games unblocked with no downloads required!",
-      keywords: "unblocked games, free online games unblocked, play unblocked games, browser games unblocked",
-    };
+    gamesCount = gamesData.length;
+  } else {
+    gamesCount = (gamesData as Game[]).filter(
+      (g) => g.category.toLowerCase() === categoryName.toLowerCase()
+    ).length;
   }
 
+  const seoEntry = getOrGenerateCategorySeo(categoryName, gamesCount);
+
   return {
-    title: seoEntry?.title || `Play Free ${categoryName} Games Online | No Downloads | CrazyArcade`,
-    description: seoEntry?.metaDescription || `Play the best free online ${categoryName} games on CrazyArcade. No downloads or installations required!`,
-    keywords: seoEntry?.keywords || `free ${categoryName} games, play ${categoryName} games, online ${categoryName} games, unblocked`,
+    title: seoEntry.title,
+    description: seoEntry.metaDescription,
+    keywords: seoEntry.keywords,
   };
 }
 
@@ -91,23 +76,8 @@ export default async function CategoryPage({ params }: Props) {
     );
   }
 
-  const seoEntry = loadCategorySeo(categoryName);
-
-  const fallbackArticle = `
-    <h2>The Best Free Online ${categoryName} Games</h2>
-    <p>Welcome to CrazyArcade, your ultimate destination for playing free online <strong>${categoryName} games</strong>. Whether you are looking to kill a few minutes during a break or want to dive deep into immersive gameplay, we have you covered. All our games are fully unblocked HTML5 files, meaning you can play them directly in your web browser on desktop, tablet, or mobile devices with no downloads required!</p>
-    <h3>Why Play ${categoryName} Games?</h3>
-    <p>The ${categoryName} genre offers a diverse mix of experiences that cater to players of all skill levels. From simple mechanics that are easy to learn but hard to master, to complex multiplayer layouts that require strategy and split-second reflexes, there is always something new to discover.</p>
-    <ul>
-      <li><strong>No Downloads:</strong> Click and play instantly. No installs or plugins needed.</li>
-      <li><strong>Cross-Platform:</strong> Works smoothly on Google Chrome, Apple Safari, Firefox, and mobile devices.</li>
-      <li><strong>100% Free:</strong> Full access to all features and levels without paying a dime.</li>
-    </ul>
-    <h3>Top Strategy & Tips</h3>
-    <p>To succeed in these games, make sure to read the controls guide on each game page, practice layouts, and learn how items behave. Bookmark CrazyArcade to join millions of browser gamers worldwide playing the best unblocked games daily!</p>
-  `;
-
-  const articleHtml = seoEntry?.article || fallbackArticle;
+  const seoEntry = getOrGenerateCategorySeo(categoryName, categoryGames.length);
+  const articleHtml = seoEntry.article;
 
   const otherCategories = [
     { slug: "arcade", name: "Arcade" },

@@ -64,9 +64,17 @@ function normalizeCategory(feedCategory) {
   return "Arcade";
 }
 
+function generateSlug(title) {
+  return String(title)
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
     // 3. Normalize and map the feed games to match our Game interface
     const mappedGames = liveGames.map((game) => ({
       id: String(game.id),
+      slug: generateSlug(game.title),
       title: String(game.title || "Untitled Game"),
       description: String(game.description || ""),
       instructions: String(game.instructions || ""),

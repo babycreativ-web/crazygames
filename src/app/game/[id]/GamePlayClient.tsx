@@ -275,18 +275,38 @@ export default function GamePlayClient({
           {/* Description */}
           <div>
             <h3 className="text-sm font-semibold text-slate-200 mb-1.5">About this Game</h3>
-            <p className="text-xs leading-relaxed text-slate-400 whitespace-pre-line">
-              {seoEntry ? seoEntry.seoDescription : game.description}
-            </p>
-            <div className="mt-3 text-[11px] text-slate-500 border-t border-white/5 pt-2">
-              Play more free games in our dedicated{" "}
-              <Link
-                href={`/category/${game.category.toLowerCase().replace(/\s+/g, "-")}`}
-                className="text-violet-400 hover:text-pink-400 underline font-semibold transition-colors"
-              >
-                {game.category} Games
-              </Link>
-              {" "}landing page!
+            {seoEntry && (seoEntry.seoDescription.includes("<p>") || seoEntry.seoDescription.includes("<h2>")) ? (
+              <div 
+                className="text-xs leading-relaxed text-slate-400 space-y-3 prose-seo"
+                dangerouslySetInnerHTML={{ __html: seoEntry.seoDescription }}
+              />
+            ) : (
+              <p className="text-xs leading-relaxed text-slate-400 whitespace-pre-line">
+                {seoEntry ? seoEntry.seoDescription : game.description}
+              </p>
+            )}
+            <div className="mt-4 text-[11px] text-slate-500 border-t border-white/5 pt-3 flex flex-wrap gap-x-4 gap-y-2">
+              <span>
+                Browse our dedicated{" "}
+                <Link
+                  href={`/category/${game.category.toLowerCase().replace(/\s+/g, "-")}`}
+                  className="text-violet-400 hover:text-pink-400 underline font-semibold transition-colors"
+                >
+                  {game.category} Games
+                </Link>
+                {" "}landing page!
+              </span>
+              <span className="text-slate-650">•</span>
+              <span>
+                Find hot titles on our{" "}
+                <Link
+                  href="/?filter=popular"
+                  className="text-violet-400 hover:text-pink-400 underline font-semibold transition-colors"
+                >
+                  🔥 Trending Games
+                </Link>
+                {" "}list!
+              </span>
             </div>
           </div>
 

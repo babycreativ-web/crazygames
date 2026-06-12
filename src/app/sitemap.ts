@@ -36,7 +36,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }));
 
   const gameUrls = (gamesData as Game[]).map((game) => ({
-    url: `${baseUrl}/game/${game.id}`,
+    url: `${baseUrl}/game/${game.slug || game.id}`,
     lastModified: new Date(),
     changeFrequency: "weekly" as const,
     priority: 0.8,
