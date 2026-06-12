@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arcade Snake - Self Hosted Demo</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #0b0f19;
+      color: #fff;
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+    #game-container {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border: 2px solid #8b5cf6;
+      border-radius: 12px;
+      padding: 15px;
+      background-color: #111827;
+      box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+    }
+    canvas {
+      background-color: #030712;
+      border-radius: 8px;
+    }
+    .score-board {
+      display: flex;
+      justify-content: space-between;
+      width: 400px;
+      margin-bottom: 10px;
+      font-weight: bold;
+      font-size: 18px;
+    }
+    .high-score {
+      color: #ec4899;
+    }
+    .score {
+      color: #8b5cf6;
+    }
+    .instructions {
+      margin-top: 10px;
+      font-size: 12px;
+      color: #94a3b8;
+    }
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(11, 15, 25, 0.95);
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+    }
+    .overlay h2 {
+      color: #ec4899;
+      margin-bottom: 10px;
+    }
+    .btn {
+      background: linear-gradient(to right, #8b5cf6, #ec4899);
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      font-weight: bold;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 14px;
+      box-shadow: 0 4px 10px rgba(139, 92, 246, 0.4);
+      transition: transform 0.2s;
+    }
+    .btn:hover {
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+
+  <div id="game-container">
+    <div class="score-board">
+      <div>SCORE: <span id="score" class="score">0</span></div>
+      <div>HIGH SCORE: <span id="high-score" class="high-score">0</span></div>
+    </div>
+    <canvas id="gameCanvas" width="400" height="400"></canvas>
+    <div class="instructions">Use Arrow Keys or WASD to control the snake</div>
+
+    <!-- Game Over / Start Overlay -->
+    <div id="overlay" class="overlay">
+      <h2 id="overlay-title">ARCADE SNAKE</h2>
+      <p id="overlay-subtitle" style="color: #94a3b8; margin-top: 0; margin-bottom: 20px; font-size: 13px;">Self-Hosted Integration Demo</p>
+      <button class="btn" id="start-btn" onclick="startGame()">PLAY GAME</button>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
+    const scoreEl = document.getElementById("score");
+    const highScoreEl = document.getElementById("high-score");
+    const overlay = document.getElementById("overlay");
+    const overlayTitle = document.getElementById("overlay-title");
+    const startBtn = document.getElementById("start-btn");
+
+    const grid = 20;
+    let count = 0;
+    let score = 0;
+    let highScore = 0;
+    let gameInterval;
+    let snake = {
+      x: 160,
+      y: 160,
+      dx: grid,
+      dy: 0,
+      cells: [],
+      maxCells: 4
+    };
+    let apple = {
+      x: 320,
+      y: 320
+    };
+
+    // Load High Score
+    try {
+      const saved = localStorage.getItem("snake_high_score");
+      if (saved) {
+        highScore = parseInt(saved);
+        highScoreEl.innerText = highScore;
+      }
+    } catch(e){}
+
+    function getRandomInt(min, max) {
+      return Math.floor(Math.random() * (max - min)) + min;
+    }
+
+    function resetApple() {
+      apple.x = getRandomInt(0, 20) * grid;
+      apple.y = getRandomInt(0, 20) * grid;
+    }
+
+    function resetGame() {
+      score = 0;
+      scoreEl.innerText = score;
+      snake.x = 160;
+      snake.y = 160;
+      snake.cells = [];
+      snake.maxCells = 4;
+      snake.dx = grid;
+      snake.dy = 0;
+      resetApple();
+    }
+
+    function startGame() {
+      overlay.style.display = "none";
+      resetGame();
+      clearInterval(gameInterval);
+      gameInterval = setInterval(update, 100);
+      
+      // Simulate sending ad event request to parent page on game start
+      window.parent.postMessage({ type: 'game_event', name: 'game_start' }, '*');
+    }
+
+    function gameOver() {
+      clearInterval(gameInterval);
+      overlay.style.display = "flex";
+      overlayTitle.innerText = "GAME OVER";
+      startBtn.innerText = "PLAY AGAIN";
+      
+      if (score > highScore) {
+        highScore = score;
+        highScoreEl.innerText = highScore;
+        try {
+          localStorage.setItem("snake_high_score", highScore.toString());
+        } catch(e){}
+
+        // Trigger postMessage save progress to parent
+        window.parent.postMessage({
+          type: 'save_progress',
+          payload: { highScore: highScore }
+        }, '*');
+      }
+
+      window.parent.postMessage({ type: 'game_event', name: 'game_over', score: score }, '*');
+    }
+
+    function update() {
+      // Move snake
+      snake.x += snake.dx;
+      snake.y += snake.dy;
+
+      // Wrap snake position horizontally/vertically
+      if (snake.x < 0) {
+        snake.x = canvas.width - grid;
+      } else if (snake.x >= canvas.width) {
+        snake.x = 0;
+      }
+      
+      if (snake.y < 0) {
+        snake.y = canvas.height - grid;
+      } else if (snake.y >= canvas.height) {
+        snake.y = 0;
+      }
+
+      // Keep track of cells
+      snake.cells.unshift({x: snake.x, y: snake.y});
+
+      // Remove cells as we move away from them
+      if (snake.cells.length > snake.maxCells) {
+        snake.cells.pop();
+      }
+
+      // Draw Apple
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      ctx.fillStyle = '#ec4899';
+      ctx.fillRect(apple.x, apple.y, grid-1, grid-1);
+
+      // Draw Snake
+      ctx.fillStyle = '#8b5cf6';
+      snake.cells.forEach(function(cell, index) {
+        // Snake gradient look
+        if (index === 0) {
+          ctx.fillStyle = '#a78bfa'; // head
+        } else {
+          ctx.fillStyle = '#8b5cf6'; // body
+        }
+        ctx.fillRect(cell.x, cell.y, grid-1, grid-1);  
+
+        // Eating apple
+        if (cell.x === apple.x && cell.y === apple.y) {
+          snake.maxCells++;
+          score += 10;
+          scoreEl.innerText = score;
+          resetApple();
+        }
+
+        // Self collision check
+        for (let i = index + 1; i < snake.cells.length; i++) {
+          if (cell.x === snake.cells[i].x && cell.y === snake.cells[i].y) {
+            gameOver();
+          }
+        }
+      });
+    }
+
+    // Input controls
+    document.addEventListener('keydown', function(e) {
+      // Prevent screen scrolling with space/arrow keys
+      if([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+        e.preventDefault();
+      }
+
+      // Left
+      if ((e.which === 37 || e.which === 65) && snake.dx === 0) {
+        snake.dx = -grid;
+        snake.dy = 0;
+      }
+      // Up
+      else if ((e.which === 38 || e.which === 87) && snake.dy === 0) {
+        snake.dy = -grid;
+        snake.dx = 0;
+      }
+      // Right
+      else if ((e.which === 39 || e.which === 68) && snake.dx === 0) {
+        snake.dx = grid;
+        snake.dy = 0;
+      }
+      // Down
+      else if ((e.which === 40 || e.which === 83) && snake.dy === 0) {
+        snake.dy = grid;
+        snake.dx = 0;
+      }
+    });
+  </script>
+</body>
+</html>
