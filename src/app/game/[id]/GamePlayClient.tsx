@@ -157,10 +157,10 @@ export default function GamePlayClient({
             id="game-iframe"
             src={game.url}
             onLoad={() => setIframeLoading(false)}
-            className="h-full w-full border-none z-10"
-            allowFullScreen
+            className="h-full w-full border-none z-10 bg-slate-950"
+            allow="autoplay; gamepad; keyboard-map; accelerometer; gyroscope; payment; screen-wake-lock; web-share; fullscreen"
             scrolling="no"
-            sandbox="allow-scripts allow-same-origin allow-popups allow-pointer-lock"
+            sandbox="allow-scripts allow-same-origin allow-popups allow-pointer-lock allow-forms"
           ></iframe>
         </div>
 
