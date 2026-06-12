@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import MainLayout from "@/components/MainLayout";
+import { AuthProvider } from "@/context/AuthContext";
 import { Suspense } from "react";
 
 const geistSans = Geist({
@@ -42,9 +43,12 @@ export default function RootLayout({
             </div>
           </div>
         }>
-          <MainLayout>{children}</MainLayout>
+          <AuthProvider>
+            <MainLayout>{children}</MainLayout>
+          </AuthProvider>
         </Suspense>
       </body>
     </html>
   );
 }
+

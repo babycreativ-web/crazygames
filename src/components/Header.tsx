@@ -3,9 +3,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Search, Heart, Shuffle, Bell, User, Menu, X, Gamepad2 } from "lucide-react";
+import { Search, Heart, Shuffle, Bell, User, Menu, X, Gamepad2, LogOut } from "lucide-react";
 import { Game } from "@/types";
 import gamesData from "@/data/games.json";
+import { useAuth } from "@/context/AuthContext";
+import AuthModal from "./AuthModal";
 
 interface HeaderProps {
   onToggleSidebar?: () => void;
@@ -19,6 +21,10 @@ export default function Header({ onToggleSidebar, sidebarOpen }: HeaderProps) {
   const [showDropdown, setShowDropdown] = useState(false);
   const [favoritesCount, setFavoritesCount] = useState(0);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const { user, loading, logout } = useAuth();
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [showProfileDropdown, setShowProfileDropdown] = useState(false);
+  const profileDropdownRef = useRef<HTMLDivElement>(null);
 
   // Load favorites count from localStorage
   useEffect(() => {
@@ -51,6 +57,9 @@ export default function Header({ onToggleSidebar, sidebarOpen }: HeaderProps) {
     function handleClickOutside(event: MouseEvent) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setShowDropdown(false);
+      }
+      if (profileDropdownRef.current && !profileDropdownRef.current.contains(event.target as Node)) {
+        setShowProfileDropdown(false);
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
@@ -208,15 +217,72 @@ export default function Header({ onToggleSidebar, sidebarOpen }: HeaderProps) {
           <Bell className="h-4.5 w-4.5" />
         </button>
 
-        {/* User Account Drawer */}
-        <button
-          title="Profile"
-          className="flex h-9 items-center gap-2 rounded-lg border border-white/5 bg-slate-900/60 px-3 text-slate-400 hover:bg-white/5 hover:text-white transition-all"
-        >
-          <User className="h-4.5 w-4.5" />
-          <span className="hidden text-xs font-semibold md:inline">Player</span>
-        </button>
+        {/* User Account Block */}
+        <div className="relative animate-fade-in" ref={profileDropdownRef}>
+          {loading ? (
+            <div className="h-9 w-9 rounded-lg border border-white/5 bg-slate-900/40 animate-pulse flex items-center justify-center">
+              <span className="h-4 w-4 rounded-full bg-slate-800"></span>
+            </div>
+          ) : user ? (
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setShowProfileDropdown(!showProfileDropdown)}
+                className="flex h-9 items-center gap-2 rounded-lg border border-white/10 bg-slate-900/60 p-1 pr-3 hover:border-violet-500/30 hover:bg-slate-900 transition-all active:scale-[0.98]"
+              >
+                <img
+                  src={user.photoURL || `https://api.dicebear.com/7.x/bottts/svg?seed=${user.uid}`}
+                  alt={user.displayName || "User Avatar"}
+                  className="h-7 w-7 rounded-md object-cover border border-white/10"
+                />
+                <span className="hidden text-xs font-bold text-slate-200 md:inline max-w-[85px] truncate">
+                  {user.displayName?.split(" ")[0] || "Player"}
+                </span>
+              </button>
+
+              {/* Profile Dropdown Menu */}
+              {showProfileDropdown && (
+                <div className="absolute right-0 top-11 z-50 w-48 overflow-hidden rounded-xl border border-white/10 bg-slate-900 shadow-2xl backdrop-blur-xl animate-in fade-in slide-in-from-top-2 duration-150">
+                  <div className="p-3 border-b border-white/5 bg-white/5 text-left">
+                    <p className="text-xs font-bold text-white truncate">{user.displayName || "Anonymous Player"}</p>
+                    <p className="text-[10px] text-slate-400 truncate">{user.email}</p>
+                  </div>
+                  <div className="flex flex-col p-1 text-left">
+                    <Link
+                      href="/?filter=favorites"
+                      onClick={() => setShowProfileDropdown(false)}
+                      className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-semibold text-slate-300 hover:bg-white/5 hover:text-white transition-colors"
+                    >
+                      <Heart className="h-3.5 w-3.5" />
+                      <span>My Favorites</span>
+                    </Link>
+                    <button
+                      onClick={async () => {
+                        setShowProfileDropdown(false);
+                        await logout();
+                      }}
+                      className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-semibold text-red-400 hover:bg-red-500/10 transition-colors"
+                    >
+                      <LogOut className="h-3.5 w-3.5" />
+                      <span>Sign Out</span>
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : (
+            <button
+              onClick={() => setIsAuthModalOpen(true)}
+              className="flex h-9 items-center gap-2 rounded-lg border border-white/5 bg-slate-900/60 px-3.5 text-xs font-bold text-violet-400 hover:border-violet-500/30 hover:bg-violet-950/20 hover:text-violet-300 transition-all active:scale-[0.98]"
+            >
+              <User className="h-4 w-4" />
+              <span>Sign In</span>
+            </button>
+          )}
+        </div>
       </div>
+      
+      {/* Auth Modal Trigger */}
+      <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
     </header>
   );
 }
