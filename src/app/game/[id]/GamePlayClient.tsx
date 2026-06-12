@@ -285,28 +285,47 @@ export default function GamePlayClient({
                 {seoEntry ? seoEntry.seoDescription : game.description}
               </p>
             )}
-            <div className="mt-4 text-[11px] text-slate-500 border-t border-white/5 pt-3 flex flex-wrap gap-x-4 gap-y-2">
-              <span>
-                Browse our dedicated{" "}
-                <Link
-                  href={`/category/${game.category.toLowerCase().replace(/\s+/g, "-")}`}
-                  className="text-violet-400 hover:text-pink-400 underline font-semibold transition-colors"
-                >
-                  {game.category} Games
-                </Link>
-                {" "}landing page!
-              </span>
-              <span className="text-slate-650">•</span>
-              <span>
-                Find hot titles on our{" "}
-                <Link
-                  href="/?filter=popular"
-                  className="text-violet-400 hover:text-pink-400 underline font-semibold transition-colors"
-                >
-                  🔥 Trending Games
-                </Link>
-                {" "}list!
-              </span>
+            <div className="mt-4 text-[11px] text-slate-500 border-t border-white/5 pt-3 flex flex-col gap-2">
+              <div className="flex flex-wrap gap-x-4 gap-y-2">
+                <span>
+                  Browse our dedicated{" "}
+                  <Link
+                    href={`/category/${game.category.toLowerCase().replace(/\s+/g, "-")}`}
+                    className="text-violet-400 hover:text-pink-400 underline font-semibold transition-colors"
+                  >
+                    {game.category} Games
+                  </Link>
+                  {" "}landing page!
+                </span>
+                <span className="text-slate-600">•</span>
+                <span>
+                  Find hot titles on our{" "}
+                  <Link
+                    href="/?filter=popular"
+                    className="text-violet-400 hover:text-pink-400 underline font-semibold transition-colors"
+                  >
+                    🔥 Trending Games
+                  </Link>
+                  {" "}list!
+                </span>
+              </div>
+
+              {relatedGames.length > 0 && (
+                <div className="text-slate-500 border-t border-white/5 pt-2 mt-1">
+                  <strong>Similar Games:</strong>{" "}
+                  {relatedGames.slice(0, 3).map((rg, idx) => (
+                    <React.Fragment key={rg.id}>
+                      {idx > 0 && " • "}
+                      <Link
+                        href={`/game/${rg.slug || rg.id}`}
+                        className="text-violet-400 hover:text-pink-400 underline font-semibold transition-colors"
+                      >
+                        {rg.title}
+                      </Link>
+                    </React.Fragment>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
 

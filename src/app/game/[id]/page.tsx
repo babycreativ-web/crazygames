@@ -42,28 +42,28 @@ export async function generateMetadata({
   }
 
   const seoEntry = getOrGenerateGameSeo(game, allGames);
-  const plainDescription = stripHtml(seoEntry.seoDescription);
   const keywords = game.tags 
     ? `${game.title}, play ${game.title}, free online games, HTML5 games, browser games, ${game.category.toLowerCase()}, ${game.tags}`
     : `${game.title}, play ${game.title}, free online games, HTML5 games, browser games, ${game.category.toLowerCase()}`;
 
   const suffix = getCategoryKeyword(game.category);
-  const pageTitle = `Play ${game.title} Online - ${suffix} | CrazyArcade`;
+  const pageTitle = `Play ${game.title} Game Online Free - ${suffix} | CrazyArcade`;
+  const metaDescription = `Play ${game.title} game online free! Learn how to play, find controls, pro tips, similar games, and FAQ for this unblocked ${game.category.toLowerCase()} browser game on CrazyArcade.`;
 
   return {
     title: pageTitle,
-    description: plainDescription.slice(0, 160).trim(),
+    description: metaDescription,
     keywords: keywords,
     openGraph: {
       title: pageTitle,
-      description: plainDescription.slice(0, 160).trim(),
+      description: metaDescription,
       images: [{ url: game.thumb }],
       type: "website",
     },
     twitter: {
       card: "summary_large_image",
       title: pageTitle,
-      description: plainDescription.slice(0, 160).trim(),
+      description: metaDescription,
       images: [game.thumb],
     },
   };

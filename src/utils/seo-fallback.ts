@@ -39,7 +39,7 @@ export function getOrGenerateGameSeo(game: Game, allGames: Game[]): GameSeoEntry
 
   if (cached) {
     return {
-      title: `Play ${game.title} Online - Free Browser Game | CrazyArcade`,
+      title: `Play ${game.title} Game Online Free - Free Browser Game | CrazyArcade`,
       seoDescription: cached.seoDescription,
       controls: cached.controls,
       tips: cached.tips || [],
@@ -94,30 +94,30 @@ export function getOrGenerateGameSeo(game: Game, allGames: Game[]): GameSeoEntry
       funParagraph = `At its core, ${game.title} is designed around satisfying core loops that keep the gameplay feeling fresh and responsive. The interface gives clear visual and audio feedback, making every action feel rewarding. It represents the best of HTML5 web games—quick loading, highly interactive, and designed to run flawlessly without taxing your computer's hardware.`;
   }
 
-  // Build list of similar games with slugs
+  // Build list of similar games with actual anchor links for search crawlability
   let similarGamesText = "";
   if (similarGames.length > 0) {
-    const listNames = similarGames.map((g) => `**${g.title}**`).join(", ");
-    similarGamesText = `If you are looking for more fun after playing ${game.title}, we highly recommend trying other titles in the **${game.category}** genre, such as ${listNames}. Each of these titles offers similar mechanics but introduces fresh obstacles and gameplay loops to keep you entertained.`;
+    const listLinks = similarGames.map((g) => `<a href="/game/${g.slug || g.id}" class="text-violet-400 hover:text-pink-400 underline font-semibold">${g.title}</a>`).join(", ");
+    similarGamesText = `If you are looking for more fun after playing ${game.title}, we highly recommend trying other titles in the **${game.category}** genre, such as ${listLinks}. Each of these titles offers similar mechanics but introduces fresh obstacles and gameplay loops to keep you entertained.`;
   } else {
     similarGamesText = `Be sure to explore our extensive collection of unblocked games in the **${game.category}** section, where we feature hundreds of titles suited for all playstyles.`;
   }
 
-  // Construct a unique 350-500 words HTML description article
+  // Construct a unique 350-500 words HTML description article with keyword-rich headers
   const seoDescription = `
-<h2>Play ${game.title} Free Online - Unblocked HTML5 Browser Game</h2>
+<h2>Play ${game.title} Game Online Free - Best Browser Game</h2>
 <p>Step into the exciting world of <strong>${game.title}</strong>, a standout addition to our collection of free <strong>${game.category} games</strong>. If you love browser-based experiences that offer instant playability and polished visuals, this game is crafted just for you. ${game.description} Designed to run smoothly on any modern device, it offers a perfect quick-fix gaming session or a deeper challenge for those seeking to master its mechanics. Best of all, you can enjoy ${game.title} for free with no downloads, installs, or registration required on CrazyArcade.</p>
 
-<h2>Why You Should Play ${game.title}</h2>
+<h2>Why ${game.title} is an Addictive ${game.category} Game</h2>
 <p>${funParagraph}</p>
 
-<h2>How to Play, Controls & Mechanics</h2>
+<h2>How to Play ${game.title}: Controls & Mechanics Guide</h2>
 <p>Getting started in ${game.title} is incredibly straightforward, thanks to its intuitive control system. ${game.instructions ? `The primary instructions are: <em>${game.instructions}</em>` : ""} The game is built using modern HTML5 code, meaning it translates inputs immediately. Whether you are using a keyboard and mouse on a desktop computer, or tapping and dragging on a mobile touchscreen, the game feels responsive and fluid. Take time in the first few levels to get a feel for the speed before aiming for advanced high scores.</p>
 
-<h2>Progression, Levels & Difficulty</h2>
-<p>As you progress through the challenges in <strong>${game.title}</strong>, you will notice a gradual ramp in difficulty. The initial levels serve as a tutorial, introducing you to the mechanics, timing, and environments. However, once you pass the early stages, the layouts become tighter and the obstacles require much reaction times. This progression curve keeps the game highly engaging, as you will continuously improve your skills and score with every subsequent run.</p>
+<h2>Progression & Difficulty: Mastering ${game.title} Levels</h2>
+<p>As you progress through the challenges in <strong>${game.title}</strong>, you will notice a gradual ramp in difficulty. The initial levels serve as a tutorial, introducing you to the mechanics, timing, and environments. However, once you pass the early stages, the layouts become tighter and the obstacles require much faster reaction times. This progression curve keeps the game highly engaging, as you will continuously improve your skills and score with every subsequent run.</p>
 
-<h2>Similar Games and Internal Linking</h2>
+<h2>Find Similar Games to ${game.title}</h2>
 <p>${similarGamesText} You can easily access these similar games and browse the full list by visiting our dedicated <a href="/category/${game.category.toLowerCase().replace(/\s+/g, "-")}" class="text-violet-400 hover:text-pink-400 underline font-semibold">${game.category} Games</a> landing page. Additionally, stay up-to-date with top-rated browser games by checking our <a href="/?filter=popular" class="text-violet-400 hover:text-pink-400 underline font-semibold">Trending Games</a> page.</p>
   `.trim();
 
@@ -150,7 +150,7 @@ export function getOrGenerateGameSeo(game: Game, allGames: Game[]): GameSeoEntry
   ];
 
   return {
-    title: `Play ${game.title} Online - Free ${game.category} Game | CrazyArcade`,
+    title: `Play ${game.title} Game Online Free - Free ${game.category} Game | CrazyArcade`,
     seoDescription,
     controls,
     tips,
