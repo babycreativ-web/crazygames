@@ -33,6 +33,37 @@ async function syncGames() {
     // (Self-hosted game support disabled as requested)
     const selfHostedGames = [];
 
+function normalizeCategory(feedCategory) {
+  const cat = String(feedCategory || "").trim();
+  const lowerCat = cat.toLowerCase();
+  
+  if (lowerCat === "racing" || lowerCat === "3d") {
+    return "Driving";
+  }
+  if (lowerCat === "action" || lowerCat === "stickman") {
+    return "Action";
+  }
+  if (lowerCat === "multiplayer" || lowerCat === ".io") {
+    return "Multiplayer";
+  }
+  if (lowerCat === "girls") {
+    return "Dress Up";
+  }
+  if (lowerCat === "soccer" || lowerCat === "sports") {
+    return "Sports";
+  }
+  
+  const matches = ["Arcade", "Puzzle", "Shooting", "Adventure", "Beauty", "Dress Up"];
+  const found = matches.find(m => m.toLowerCase() === lowerCat);
+  if (found) return found;
+
+  if (lowerCat === "cooking") return "Arcade";
+  if (lowerCat === "boys") return "Arcade";
+  if (lowerCat === "clicker") return "Puzzle";
+  
+  return "Arcade";
+}
+
     // 3. Normalize and map the feed games to match our Game interface
     const mappedGames = liveGames.map((game) => ({
       id: String(game.id),
@@ -40,21 +71,50 @@ async function syncGames() {
       description: String(game.description || ""),
       instructions: String(game.instructions || ""),
       url: String(game.url || ""),
-      category: String(game.category || "Arcade"),
+      category: normalizeCategory(game.category),
       tags: String(game.tags || ""),
       thumb: String(game.thumb || ""),
       width: String(game.width || "800"),
       height: String(game.height || "600"),
     }));
 
-    // Limit feed games to ensure we get exactly 100 games total
-    const targetTotal = 100;
-    const maxFeedGames = Math.max(0, targetTotal - selfHostedGames.length);
-    const limitedFeedGames = mappedGames.slice(0, maxFeedGames);
-    console.log(`Limiting feed games to ${limitedFeedGames.length} to target a total of ${targetTotal} games.`);
+    // Group games by category
+    const categoryGroups = {};
+    mappedGames.forEach((game) => {
+      if (!categoryGroups[game.category]) {
+        categoryGroups[game.category] = [];
+      }
+      categoryGroups[game.category].push(game);
+    });
+
+    // Select games in round-robin fashion until we reach target total
+    const targetTotal = 200;
+    const selectedGames = [];
+    const categoriesList = Object.keys(categoryGroups);
+    const indices = {};
+    categoriesList.forEach((c) => (indices[c] = 0));
+
+    let added = true;
+    while (selectedGames.length < targetTotal && added) {
+      added = false;
+      for (const cat of categoriesList) {
+        const group = categoryGroups[cat];
+        const idx = indices[cat];
+        if (idx < group.length) {
+          selectedGames.push(group[idx]);
+          indices[cat] = idx + 1;
+          added = true;
+          if (selectedGames.length >= targetTotal) {
+            break;
+          }
+        }
+      }
+    }
+
+    console.log(`Selected ${selectedGames.length} balanced games from feed.`);
 
     // 4. Merge self-hosted games (at the top) with feed games
-    const mergedList = [...selfHostedGames, ...limitedFeedGames];
+    const mergedList = [...selfHostedGames, ...selectedGames];
 
     // Ensure data directory exists
     const dir = path.dirname(DATA_FILE_PATH);
