@@ -173,7 +173,15 @@ export default function GamePlayClient({
             </span>
             <div className="flex flex-col">
               <h1 className="text-lg font-bold text-white leading-tight">{game.title}</h1>
-              <span className="text-xs text-slate-400 mt-0.5">Category: {game.category}</span>
+              <span className="text-xs text-slate-400 mt-0.5">
+                Category:{" "}
+                <Link
+                  href={`/category/${game.category.toLowerCase().replace(/\s+/g, "-")}`}
+                  className="text-violet-400 hover:text-pink-400 underline transition-colors"
+                >
+                  {game.category}
+                </Link>
+              </span>
             </div>
           </div>
 
@@ -234,6 +242,16 @@ export default function GamePlayClient({
             <p className="text-xs leading-relaxed text-slate-400 whitespace-pre-line">
               {seoEntry ? seoEntry.seoDescription : game.description}
             </p>
+            <div className="mt-3 text-[11px] text-slate-500 border-t border-white/5 pt-2">
+              Play more free games in our dedicated{" "}
+              <Link
+                href={`/category/${game.category.toLowerCase().replace(/\s+/g, "-")}`}
+                className="text-violet-400 hover:text-pink-400 underline font-semibold transition-colors"
+              >
+                {game.category} Games
+              </Link>
+              {" "}landing page!
+            </div>
           </div>
 
           {/* Instructions / Controls */}

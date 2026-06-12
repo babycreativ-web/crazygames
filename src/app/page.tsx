@@ -5,7 +5,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { Game } from "@/types";
 import gamesData from "@/data/games.json";
 import GameCard from "@/components/GameCard";
-import { Play, Flame, Heart, Sparkles, Grid, Search, HelpCircle, Star } from "lucide-react";
+import { Play, Flame, Heart, Sparkles, Grid, Search, HelpCircle, Star, Zap, Brain, Skull } from "lucide-react";
 import Link from "next/link";
 
 export default function Home() {
@@ -76,6 +76,30 @@ export default function Home() {
     } else if (activeFilter === "new") {
       // Sort by newest addition (id base)
       result = [...result].reverse();
+    } else if (activeFilter === "rage") {
+      result = result.filter(
+        (g) =>
+          g.tags.toLowerCase().includes("skill") ||
+          g.tags.toLowerCase().includes("physics") ||
+          g.tags.toLowerCase().includes("run") ||
+          g.tags.toLowerCase().includes("avoid") ||
+          g.title.toLowerCase().includes("rage") ||
+          g.title.toLowerCase().includes("impossible") ||
+          g.title.toLowerCase().includes("run")
+      );
+    } else if (activeFilter === "hardest") {
+      result = result.filter(
+        (g) =>
+          g.tags.toLowerCase().includes("difficult") ||
+          g.tags.toLowerCase().includes("shooter") ||
+          g.tags.toLowerCase().includes("zombie") ||
+          g.tags.toLowerCase().includes("ninja") ||
+          g.title.toLowerCase().includes("escape") ||
+          g.title.toLowerCase().includes("master") ||
+          g.title.toLowerCase().includes("hard")
+      );
+    } else if (activeFilter === "iq-puzzle") {
+      result = result.filter((g) => g.category.toLowerCase() === "puzzle");
     }
 
     setFilteredGames(result);
@@ -97,13 +121,15 @@ export default function Home() {
     setVisibleCount((prev) => prev + 12);
   };
 
-  // Build breadcrumb/heading title
   const getPageTitle = () => {
     if (searchQuery) return `Search Results for "${searchQuery}"`;
     if (activeCategory) return `${activeCategory} Games`;
     if (activeFilter === "favorites") return "My Favorite Games";
     if (activeFilter === "popular") return "Popular Games";
     if (activeFilter === "new") return "New Additions";
+    if (activeFilter === "rage") return "Rage Games";
+    if (activeFilter === "hardest") return "Hardest Games";
+    if (activeFilter === "iq-puzzle") return "IQ Puzzle Games";
     return "Trending Games";
   };
 
@@ -111,6 +137,9 @@ export default function Home() {
     if (activeFilter === "favorites") return <Heart className="h-5 w-5 text-pink-500 fill-pink-500" />;
     if (activeFilter === "popular") return <Flame className="h-5 w-5 text-orange-500" />;
     if (activeFilter === "new") return <Sparkles className="h-5 w-5 text-violet-400" />;
+    if (activeFilter === "rage") return <Zap className="h-5 w-5 text-yellow-400" />;
+    if (activeFilter === "hardest") return <Skull className="h-5 w-5 text-red-500" />;
+    if (activeFilter === "iq-puzzle") return <Brain className="h-5 w-5 text-cyan-400" />;
     return <Grid className="h-5 w-5 text-violet-400" />;
   };
 

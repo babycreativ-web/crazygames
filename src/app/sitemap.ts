@@ -15,6 +15,26 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
+  const categorySlugs = [
+    "arcade",
+    "action",
+    "puzzle",
+    "driving",
+    "shooting",
+    "sports",
+    "adventure",
+    "multiplayer",
+    "dress-up",
+    "unblocked",
+  ];
+
+  const categoryUrls = categorySlugs.map((slug) => ({
+    url: `${baseUrl}/category/${slug}`,
+    lastModified: new Date(),
+    changeFrequency: "daily" as const,
+    priority: 0.9,
+  }));
+
   const gameUrls = (gamesData as Game[]).map((game) => ({
     url: `${baseUrl}/game/${game.id}`,
     lastModified: new Date(),
@@ -22,5 +42,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }));
 
-  return [...staticUrls, ...gameUrls];
+  return [...staticUrls, ...categoryUrls, ...gameUrls];
 }

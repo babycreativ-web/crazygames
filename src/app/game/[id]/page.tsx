@@ -10,6 +10,19 @@ interface GamePageProps {
   params: Promise<{ id: string }>;
 }
 
+function getCategoryKeyword(category: string): string {
+  const cat = category.toLowerCase();
+  if (cat === "driving") return "Free Car Driving Game";
+  if (cat === "multiplayer") return "Free 2 Player Game";
+  if (cat === "shooting") return "Free Shooting Game";
+  if (cat === "action") return "Free Action Game";
+  if (cat === "puzzle") return "Free IQ Puzzle Game";
+  if (cat === "arcade") return "Free Arcade Game";
+  if (cat === "sports") return "Free Sports Game";
+  if (cat === "dress-up") return "Free Girls Dress Up Game";
+  return "Free Browser Game";
+}
+
 export async function generateMetadata({
   params,
 }: GamePageProps): Promise<Metadata> {
@@ -30,19 +43,22 @@ export async function generateMetadata({
     ? `${game.title}, play ${game.title}, free online games, HTML5 games, browser games, ${game.category.toLowerCase()}, ${game.tags}`
     : `${game.title}, play ${game.title}, free online games, HTML5 games, browser games, ${game.category.toLowerCase()}`;
 
+  const suffix = getCategoryKeyword(game.category);
+  const pageTitle = `Play ${game.title} Online - ${suffix} | CrazyArcade`;
+
   return {
-    title: `Play ${game.title} Online - Free Browser Game | CrazyArcade`,
+    title: pageTitle,
     description: description.slice(0, 160).trim(),
     keywords: keywords,
     openGraph: {
-      title: `Play ${game.title} Online - Free Browser Game | CrazyArcade`,
+      title: pageTitle,
       description: description.slice(0, 160).trim(),
       images: [{ url: game.thumb }],
       type: "website",
     },
     twitter: {
       card: "summary_large_image",
-      title: `Play ${game.title} Online - Free Browser Game | CrazyArcade`,
+      title: pageTitle,
       description: description.slice(0, 160).trim(),
       images: [game.thumb],
     },
