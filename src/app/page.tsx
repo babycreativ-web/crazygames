@@ -5,7 +5,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { Game } from "@/types";
 import gamesData from "@/data/games.json";
 import GameCard from "@/components/GameCard";
-import { Play, Flame, Heart, Sparkles, Grid, Search, HelpCircle, Star, Zap, Brain, Skull } from "lucide-react";
+import { Play, Flame, Heart, Sparkles, Grid, Search, HelpCircle, Star, Zap, Brain, Skull, ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
 
 export default function Home() {
@@ -20,8 +20,9 @@ export default function Home() {
   const [favorites, setFavorites] = useState<string[]>([]);
   const [featuredGame, setFeaturedGame] = useState<Game | null>(null);
   const [visibleCount, setVisibleCount] = useState(20);
+  const [recentlyPlayed, setRecentlyPlayed] = useState<Game[]>([]);
 
-  // Load favorites and filter games
+  // Load favorites, recently played and filter games
   useEffect(() => {
     // 1. Get favorites from localStorage
     const loadFavorites = () => {
@@ -37,11 +38,40 @@ export default function Home() {
       }
     };
 
+    // 2. Get recently played from localStorage
+    const loadRecentlyPlayed = () => {
+      try {
+        const saved = localStorage.getItem("recently_played");
+        if (saved) {
+          const ids = JSON.parse(saved);
+          if (Array.isArray(ids)) {
+            const allGames = gamesData as Game[];
+            const matched = ids
+              .map((id) => allGames.find((g) => g.id === id))
+              .filter(Boolean) as Game[];
+            setRecentlyPlayed(matched);
+          }
+        } else {
+          setRecentlyPlayed([]);
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    };
+
     loadFavorites();
+    loadRecentlyPlayed();
+
     window.addEventListener("favorites-updated", loadFavorites);
+    
+    const handleRecentlyPlayedUpdate = () => {
+      loadRecentlyPlayed();
+    };
+    window.addEventListener("recently-played-updated", handleRecentlyPlayedUpdate);
 
     return () => {
       window.removeEventListener("favorites-updated", loadFavorites);
+      window.removeEventListener("recently-played-updated", handleRecentlyPlayedUpdate);
     };
   }, []);
 
@@ -106,7 +136,6 @@ export default function Home() {
 
     // Set a random featured game from the results (or fallback to first game)
     if (result.length > 0) {
-      // We can use the first item to keep it stable, or pick a high-quality one
       setFeaturedGame(result[0]);
     } else {
       setFeaturedGame(null);
@@ -162,8 +191,74 @@ export default function Home() {
     { id: "Word", label: "Word" },
   ];
 
+  const scrollRow = (id: string, direction: "left" | "right") => {
+    const el = document.getElementById(id);
+    if (el) {
+      const scrollAmount = direction === "left" ? -el.clientWidth * 0.75 : el.clientWidth * 0.75;
+      el.scrollBy({ left: scrollAmount, behavior: "smooth" });
+    }
+  };
+
+  const allGames = gamesData as Game[];
+
+  // Curate rows
+  const trendingGames = [...allGames].sort((a, b) => parseInt(b.id) - parseInt(a.id)).slice(0, 24);
+  const newGames = [...allGames].reverse().slice(0, 24);
+  
+  const gamesByCategory = (catName: string) => {
+    return allGames.filter((g) => g.category.toLowerCase() === catName.toLowerCase()).slice(0, 24);
+  };
+
+  const renderGameRow = (title: string, games: Game[], rowId: string, href: string) => {
+    if (games.length === 0) return null;
+    return (
+      <div key={rowId} className="relative group/row flex flex-col gap-2.5 animate-fadeIn">
+        <div className="flex items-center justify-between px-1">
+          <h3 className="text-sm font-bold text-white md:text-base hover:text-violet-400 transition-colors">
+            <span>{title}</span>
+          </h3>
+          <Link href={href} className="text-[11px] font-bold text-violet-400 hover:text-pink-400 transition-colors">
+            View more
+          </Link>
+        </div>
+        
+        <div className="relative">
+          {/* Left Scroll Button */}
+          <button
+            onClick={() => scrollRow(rowId, "left")}
+            className="absolute left-1 top-[38%] -translate-y-1/2 z-30 hidden group-hover/row:flex h-8 w-8 items-center justify-center rounded-full bg-slate-950/90 text-white border border-white/10 hover:bg-slate-900 transition-all cursor-pointer shadow-lg hover:scale-105"
+            aria-label="Scroll left"
+          >
+            <ChevronLeft className="h-4.5 w-4.5" />
+          </button>
+          
+          {/* Right Scroll Button */}
+          <button
+            onClick={() => scrollRow(rowId, "right")}
+            className="absolute right-1 top-[38%] -translate-y-1/2 z-30 hidden group-hover/row:flex h-8 w-8 items-center justify-center rounded-full bg-slate-950/90 text-white border border-white/10 hover:bg-slate-900 transition-all cursor-pointer shadow-lg hover:scale-105"
+            aria-label="Scroll right"
+          >
+            <ChevronRight className="h-4.5 w-4.5" />
+          </button>
+
+          {/* Horizontal scroll container */}
+          <div
+            id={rowId}
+            className="flex gap-2 md:gap-2.5 overflow-x-auto pb-2 pt-0.5 scrollbar-none scroll-smooth w-full"
+          >
+            {games.map((game) => (
+              <div key={game.id} className="w-[135px] sm:w-[160px] md:w-[185px] lg:w-[205px] xl:w-[220px] shrink-0">
+                <GameCard game={game} />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
-    <div className="flex flex-col gap-8 pb-12">
+    <div className="flex flex-col gap-6 pb-12">
       {/* Category Horizontal Pill Scroller */}
       <div className="relative flex items-center w-full">
         <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-none w-full scroll-smooth">
@@ -194,15 +289,15 @@ export default function Home() {
       </div>
 
       {/* Featured Hero Banner */}
-      {featuredGame && !searchQuery && !activeCategory && activeFilter !== "favorites" && (
-        <div className="relative overflow-hidden rounded-2xl border border-white/5 bg-slate-900 shadow-2xl">
+      {featuredGame && !searchQuery && !activeCategory && !activeFilter && (
+        <div className="relative overflow-hidden rounded-xl border border-white/5 bg-slate-900 shadow-2xl animate-fadeIn">
           {/* Background image fade */}
           <div className="absolute inset-0 bg-cover bg-center opacity-15 blur-sm" style={{ backgroundImage: `url(${featuredGame.thumb})` }}></div>
           <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/70 to-transparent"></div>
 
-          <div className="relative z-10 flex flex-col md:flex-row gap-6 p-6 md:p-8 lg:p-10 items-center">
+          <div className="relative z-10 flex flex-col md:flex-row gap-6 p-6 items-center">
             {/* Banner image */}
-            <div className="relative aspect-[4/3] w-48 md:w-64 overflow-hidden rounded-xl border border-white/10 shadow-2xl shrink-0">
+            <div className="relative aspect-[4/3] w-40 md:w-52 overflow-hidden rounded-lg border border-white/10 shadow-2xl shrink-0">
               <img
                 src={featuredGame.thumb}
                 alt={featuredGame.title}
@@ -211,31 +306,31 @@ export default function Home() {
             </div>
 
             {/* Banner details */}
-            <div className="flex flex-col gap-3 flex-1 text-center md:text-left">
+            <div className="flex flex-col gap-2.5 flex-1 text-center md:text-left">
               <div className="flex items-center justify-center md:justify-start gap-2">
-                <span className="rounded-full bg-violet-500/10 border border-violet-500/30 px-3 py-0.5 text-[10px] font-bold uppercase tracking-wider text-violet-400">
+                <span className="rounded-full bg-violet-500/10 border border-violet-500/30 px-3 py-0.5 text-[9px] font-bold uppercase tracking-wider text-violet-400">
                   Featured Game
                 </span>
-                <div className="flex items-center gap-1 text-[10px] font-bold text-amber-400">
-                  <Star className="h-3.5 w-3.5 fill-amber-400" />
+                <div className="flex items-center gap-1 text-[9px] font-bold text-amber-400">
+                  <Star className="h-3 w-3 fill-amber-400" />
                   <span>4.8 Rating</span>
                 </div>
               </div>
               
-              <h1 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-white tracking-tight leading-tight">
+              <h1 className="text-xl md:text-2xl lg:text-3xl font-extrabold text-white tracking-tight leading-tight">
                 {featuredGame.title}
               </h1>
               
-              <p className="text-xs md:text-sm text-slate-400 max-w-xl line-clamp-2 md:line-clamp-3">
+              <p className="text-xs text-slate-400 max-w-xl line-clamp-2">
                 {featuredGame.description}
               </p>
 
-              <div className="mt-2 flex flex-wrap items-center justify-center md:justify-start gap-4">
+              <div className="mt-1 flex flex-wrap items-center justify-center md:justify-start gap-4">
                 <Link
                   href={`/game/${featuredGame.slug || featuredGame.id}`}
-                  className="flex items-center gap-2 rounded-full bg-gradient-to-r from-violet-600 to-pink-500 px-6 py-2.5 text-xs font-bold text-white shadow-lg shadow-violet-500/25 hover:from-violet-500 hover:to-pink-400 transition-all hover:scale-105"
+                  className="flex items-center gap-2 rounded-full bg-gradient-to-r from-violet-600 to-pink-500 px-5 py-2 text-xs font-bold text-white shadow-lg shadow-violet-500/25 hover:from-violet-500 hover:to-pink-400 transition-all hover:scale-105"
                 >
-                  <Play className="h-4 w-4 fill-white ml-0.5" />
+                  <Play className="h-3.5 w-3.5 fill-white ml-0.5" />
                   Play Now
                 </Link>
                 <span className="text-xs text-slate-500">
@@ -247,74 +342,102 @@ export default function Home() {
         </div>
       )}
 
-      {/* Main Grid Header */}
-      <div className="flex items-center justify-between border-b border-white/5 pb-3">
-        <div className="flex items-center gap-2.5">
-          {getPageIcon()}
-          <h2 className="text-lg font-bold tracking-tight text-white md:text-xl">
-            {getPageTitle()}
-          </h2>
-          <span className="rounded-full bg-slate-900 border border-white/5 px-2.5 py-0.5 text-xs text-slate-400">
-            {filteredGames.length} games
-          </span>
-        </div>
-      </div>
+      {/* Curated Sliders or Grid View */}
+      {!activeCategory && !activeFilter && !searchQuery ? (
+        <div className="flex flex-col gap-8">
+          {/* Continue Playing */}
+          {recentlyPlayed.length > 0 &&
+            renderGameRow("Continue playing", recentlyPlayed, "continue-playing", "/?filter=new")}
 
-      {/* Grid of Cards */}
-      {filteredGames.length > 0 ? (
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-          {filteredGames.slice(0, visibleCount).map((game) => (
-            <GameCard key={game.id} game={game} />
-          ))}
+          {/* Trending Games */}
+          {renderGameRow("Trending games", trendingGames, "trending", "/?filter=popular")}
+
+          {/* New Games */}
+          {renderGameRow("New games", newGames, "new-games", "/?filter=new")}
+
+          {/* Category Rows */}
+          {categories.map((cat) => {
+            const catGames = gamesByCategory(cat.id);
+            return renderGameRow(
+              `${cat.label} Games`,
+              catGames,
+              `cat-${cat.id.toLowerCase()}`,
+              `/?category=${cat.id}`
+            );
+          })}
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center py-20 text-center">
-          {activeFilter === "favorites" ? (
-            <div className="max-w-md flex flex-col items-center gap-4">
-              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-pink-950/20 text-pink-500 border border-pink-500/10">
-                <Heart className="h-8 w-8" />
-              </div>
-              <h3 className="text-lg font-bold text-white">No favorites yet</h3>
-              <p className="text-sm text-slate-400 leading-relaxed">
-                Click the heart icon on any game thumbnail to add it here. Your favorites list syncs automatically to this device.
-              </p>
-              <Link
-                href="/"
-                className="mt-2 rounded-full bg-slate-900 border border-white/10 px-5 py-2 text-xs font-semibold text-slate-200 hover:bg-slate-800 transition-colors"
-              >
-                Browse Games
-              </Link>
+        <>
+          {/* Main Grid Header */}
+          <div className="flex items-center justify-between border-b border-white/5 pb-3">
+            <div className="flex items-center gap-2.5">
+              {getPageIcon()}
+              <h2 className="text-base font-bold tracking-tight text-white md:text-lg">
+                {getPageTitle()}
+              </h2>
+              <span className="rounded-full bg-slate-900 border border-white/5 px-2.5 py-0.5 text-[10px] text-slate-400">
+                {filteredGames.length} games
+              </span>
+            </div>
+          </div>
+
+          {/* Grid of Cards */}
+          {filteredGames.length > 0 ? (
+            <div className="grid grid-cols-2 gap-2 md:gap-2.5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 3xl:grid-cols-8 animate-fadeIn">
+              {filteredGames.slice(0, visibleCount).map((game) => (
+                <GameCard key={game.id} game={game} />
+              ))}
             </div>
           ) : (
-            <div className="max-w-md flex flex-col items-center gap-4">
-              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-slate-900 text-slate-400 border border-white/5">
-                <Search className="h-8 w-8" />
-              </div>
-              <h3 className="text-lg font-bold text-white">No games found</h3>
-              <p className="text-sm text-slate-400 leading-relaxed">
-                We couldn't find any games matching your current selection. Try checking other categories or tags.
-              </p>
-              <Link
-                href="/"
-                className="mt-2 rounded-full bg-slate-900 border border-white/10 px-5 py-2 text-xs font-semibold text-slate-200 hover:bg-slate-800 transition-colors"
-              >
-                Clear Filters
-              </Link>
+            <div className="flex flex-col items-center justify-center py-20 text-center">
+              {activeFilter === "favorites" ? (
+                <div className="max-w-md flex flex-col items-center gap-4">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-full bg-pink-950/20 text-pink-500 border border-pink-500/10">
+                    <Heart className="h-7 w-7" />
+                  </div>
+                  <h3 className="text-md font-bold text-white">No favorites yet</h3>
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    Click the heart icon on any game thumbnail to add it here. Your favorites list syncs automatically to this device.
+                  </p>
+                  <Link
+                    href="/"
+                    className="mt-2 rounded-full bg-slate-900 border border-white/10 px-5 py-2 text-xs font-semibold text-slate-200 hover:bg-slate-800 transition-colors"
+                  >
+                    Browse Games
+                  </Link>
+                </div>
+              ) : (
+                <div className="max-w-md flex flex-col items-center gap-4">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-full bg-slate-900 text-slate-400 border border-white/5">
+                    <Search className="h-7 w-7" />
+                  </div>
+                  <h3 className="text-md font-bold text-white">No games found</h3>
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    We couldn't find any games matching your current selection. Try checking other categories or tags.
+                  </p>
+                  <Link
+                    href="/"
+                    className="mt-2 rounded-full bg-slate-900 border border-white/10 px-5 py-2 text-xs font-semibold text-slate-200 hover:bg-slate-850 transition-colors"
+                  >
+                    Clear Filters
+                  </Link>
+                </div>
+              )}
             </div>
           )}
-        </div>
-      )}
 
-      {/* Pagination Show More */}
-      {filteredGames.length > visibleCount && (
-        <div className="mt-8 flex justify-center">
-          <button
-            onClick={handleShowMore}
-            className="rounded-full bg-slate-900 border border-white/5 hover:border-white/10 px-8 py-3 text-xs font-bold text-slate-200 hover:bg-slate-850 hover:text-white transition-all shadow-md active:scale-95"
-          >
-            Show More Games
-          </button>
-        </div>
+          {/* Pagination Show More */}
+          {filteredGames.length > visibleCount && (
+            <div className="mt-8 flex justify-center">
+              <button
+                onClick={handleShowMore}
+                className="rounded-full bg-slate-900 border border-white/5 hover:border-white/10 px-8 py-3 text-xs font-bold text-slate-200 hover:bg-slate-850 hover:text-white transition-all shadow-md active:scale-95"
+              >
+                Show More Games
+              </button>
+            </div>
+          )}
+        </>
       )}
     </div>
   );

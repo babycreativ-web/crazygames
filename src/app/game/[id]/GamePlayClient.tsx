@@ -30,7 +30,7 @@ export default function GamePlayClient({
   const [isFavorite, setIsFavorite] = useState(false);
   const [copiedLink, setCopiedLink] = useState(false);
 
-  // Sync favorites check with localStorage on mount or game change
+  // Sync favorites check and track recently played on mount or game change
   useEffect(() => {
     setIframeLoading(true);
     try {
@@ -43,6 +43,23 @@ export default function GamePlayClient({
       }
     } catch (e) {
       console.error("Failed to load favorites", e);
+    }
+
+    // Add to recently played list
+    try {
+      const savedPlayed = localStorage.getItem("recently_played");
+      let playedList: string[] = savedPlayed ? JSON.parse(savedPlayed) : [];
+      if (!Array.isArray(playedList)) playedList = [];
+      
+      // Remove current if exists, and prepend
+      playedList = playedList.filter((id) => id !== game.id);
+      playedList.unshift(game.id);
+      
+      // Limit to 12 games
+      playedList = playedList.slice(0, 12);
+      localStorage.setItem("recently_played", JSON.stringify(playedList));
+    } catch (e) {
+      console.error("Failed to track recently played", e);
     }
   }, [game.id]);
 
@@ -393,7 +410,7 @@ export default function GamePlayClient({
         </div>
 
         {relatedGames.length > 0 ? (
-          <div className="grid grid-cols-2 gap-4 lg:grid-cols-1">
+          <div className="grid grid-cols-2 gap-2 md:gap-2.5 lg:grid-cols-1">
             {relatedGames.map((g) => (
               <GameCard key={g.id} game={g} />
             ))}
