@@ -18,7 +18,7 @@ export default function Home() {
 
   const [filteredGames, setFilteredGames] = useState<Game[]>([]);
   const [favorites, setFavorites] = useState<string[]>([]);
-  const [featuredGame, setFeaturedGame] = useState<Game | null>(null);
+  const [featuredGame, setFeaturedGame] = useState<Game | null>((gamesData as Game[])[0] || null);
   const [visibleCount, setVisibleCount] = useState(20);
   const [recentlyPlayed, setRecentlyPlayed] = useState<Game[]>([]);
 
@@ -202,11 +202,11 @@ export default function Home() {
   const allGames = gamesData as Game[];
 
   // Curate rows
-  const trendingGames = [...allGames].sort((a, b) => parseInt(b.id) - parseInt(a.id)).slice(0, 24);
-  const newGames = [...allGames].reverse().slice(0, 24);
+  const trendingGames = [...allGames].sort((a, b) => parseInt(b.id) - parseInt(a.id)).slice(0, 15);
+  const newGames = [...allGames].reverse().slice(0, 15);
   
   const gamesByCategory = (catName: string) => {
-    return allGames.filter((g) => g.category.toLowerCase() === catName.toLowerCase()).slice(0, 24);
+    return allGames.filter((g) => g.category.toLowerCase() === catName.toLowerCase()).slice(0, 15);
   };
 
   const renderGameRow = (title: string, games: Game[], rowId: string, href: string) => {
@@ -364,7 +364,9 @@ export default function Home() {
           {renderGameRow("New games", newGames, "new-games", "/?filter=new")}
 
           {/* Category Rows */}
-          {categories.map((cat) => {
+          {["Arcade", "Action", "Shooting", "Driving", "Puzzle", "Adventure"].map((catId) => {
+            const cat = categories.find((c) => c.id === catId);
+            if (!cat) return null;
             const catGames = gamesByCategory(cat.id);
             return renderGameRow(
               `${cat.label} Games`,
