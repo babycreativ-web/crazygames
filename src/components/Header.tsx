@@ -120,9 +120,9 @@ export default function Header({ onToggleSidebar, sidebarOpen }: HeaderProps) {
             {sidebarOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
 
-          <Link href="/" className="flex items-center gap-2.5 select-none group">
+          <Link href="/" className="flex items-center gap-1.5 sm:gap-2.5 select-none group">
             {/* Cute Purple Monster Mascot with Horns & Joystick */}
-            <div className="flex h-14 w-14 items-center justify-center transition-transform duration-300 group-hover:scale-110">
+            <div className="flex h-10 w-10 md:h-14 md:w-14 items-center justify-center transition-transform duration-300 group-hover:scale-110">
               <svg viewBox="0 0 100 100" className="h-full w-full">
                 {/* Shadow */}
                 <ellipse cx="50" cy="85" rx="30" ry="6" fill="rgba(0,0,0,0.35)" />
@@ -154,8 +154,8 @@ export default function Header({ onToggleSidebar, sidebarOpen }: HeaderProps) {
             </div>
             {/* Typography */}
             <div className="flex flex-col font-fredoka leading-[0.9] text-white">
-              <span className="text-[22px] font-bold tracking-tight text-white">crazy</span>
-              <span className="text-[22px] font-bold tracking-tight text-white">arcade</span>
+              <span className="text-[17px] md:text-[22px] font-bold tracking-tight text-white">crazy</span>
+              <span className="text-[17px] md:text-[22px] font-bold tracking-tight text-white">arcade</span>
             </div>
           </Link>
         </div>
@@ -221,7 +221,7 @@ export default function Header({ onToggleSidebar, sidebarOpen }: HeaderProps) {
         </div>
 
         {/* Right side: Random game, Favorites, notifications, profile */}
-        <div className="flex items-center gap-2 md:gap-3">
+        <div className="flex items-center gap-1.5 sm:gap-2 md:gap-3">
           {/* Mobile Search Toggle */}
           <button
             onClick={() => setIsMobileSearchOpen(!isMobileSearchOpen)}
@@ -272,7 +272,7 @@ export default function Header({ onToggleSidebar, sidebarOpen }: HeaderProps) {
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => setShowProfileDropdown(!showProfileDropdown)}
-                  className="flex h-9 items-center gap-2 rounded-lg border border-white/10 bg-slate-900/60 p-1 pr-3 hover:border-violet-500/30 hover:bg-slate-900 transition-all active:scale-[0.98]"
+                  className="flex h-9 items-center gap-2 rounded-lg border border-white/10 bg-slate-900/60 p-1 md:pr-3 hover:border-violet-500/30 hover:bg-slate-900 transition-all active:scale-[0.98]"
                 >
                   <img
                     src={user.photoURL || `https://api.dicebear.com/7.x/bottts/svg?seed=${user.uid}`}
@@ -317,10 +317,10 @@ export default function Header({ onToggleSidebar, sidebarOpen }: HeaderProps) {
             ) : (
               <button
                 onClick={() => setIsAuthModalOpen(true)}
-                className="flex h-9 items-center gap-2 rounded-lg border border-white/5 bg-slate-900/60 px-3.5 text-xs font-bold text-violet-400 hover:border-violet-500/30 hover:bg-violet-950/20 hover:text-violet-300 transition-all active:scale-[0.98]"
+                className="flex h-9 items-center gap-1.5 rounded-lg border border-white/5 bg-slate-900/60 px-2.5 sm:px-3.5 text-xs font-bold text-violet-400 hover:border-violet-500/30 hover:bg-violet-950/20 hover:text-violet-300 transition-all active:scale-[0.98]"
               >
                 <User className="h-4 w-4" />
-                <span>Sign In</span>
+                <span className="hidden sm:inline">Sign In</span>
               </button>
             )}
           </div>
