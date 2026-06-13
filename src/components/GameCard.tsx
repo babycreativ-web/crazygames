@@ -78,13 +78,13 @@ export default function GameCard({ game }: GameCardProps) {
         />
 
         {/* Rating Overlay */}
-        <div className="absolute top-1.5 left-1.5 flex items-center gap-0.5 rounded bg-slate-950/80 px-1.5 py-0.5 text-[9px] font-bold text-amber-400 shadow-md backdrop-blur-sm z-10">
+        <div className="absolute top-1.5 left-1.5 flex items-center gap-0.5 rounded bg-slate-950/90 px-1.5 py-0.5 text-[9px] font-bold text-amber-400 shadow-md z-10">
           <Star className="h-2.5 w-2.5 fill-amber-400" />
           <span>{rating}</span>
         </div>
 
         {/* Category Badge */}
-        <div className="absolute top-1.5 right-1.5 rounded bg-slate-950/80 px-1.5 py-0.5 text-[9px] font-medium text-slate-300 shadow-md backdrop-blur-sm border border-white/5 z-10">
+        <div className="absolute top-1.5 right-1.5 rounded bg-slate-950/90 px-1.5 py-0.5 text-[9px] font-medium text-slate-300 shadow-md border border-white/5 z-10">
           {game.category}
         </div>
 
@@ -111,10 +111,10 @@ export default function GameCard({ game }: GameCardProps) {
         {/* Direct Favorite Heart Trigger */}
         <button
           onClick={toggleFavorite}
-          className={`absolute bottom-1.5 right-1.5 flex h-7 w-7 items-center justify-center rounded-md backdrop-blur-sm transition-all duration-200 border z-20 ${
+          className={`absolute bottom-1.5 right-1.5 flex h-7 w-7 items-center justify-center rounded-md transition-all duration-200 border z-20 ${
             isFavorite
               ? "bg-pink-600/90 border-pink-500 text-white shadow-lg shadow-pink-500/20"
-              : "bg-slate-950/80 border-white/5 text-slate-400 hover:border-pink-500/30 hover:text-pink-400 hover:bg-slate-950"
+              : "bg-slate-950/90 border-white/5 text-slate-400 hover:border-pink-500/30 hover:text-pink-400 hover:bg-slate-950"
           }`}
           aria-label="Add to Favorites"
         >

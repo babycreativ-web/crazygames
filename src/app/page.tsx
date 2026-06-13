@@ -202,11 +202,11 @@ export default function Home() {
   const allGames = gamesData as Game[];
 
   // Curate rows
-  const trendingGames = [...allGames].sort((a, b) => parseInt(b.id) - parseInt(a.id)).slice(0, 15);
-  const newGames = [...allGames].reverse().slice(0, 15);
+  const trendingGames = [...allGames].sort((a, b) => parseInt(b.id) - parseInt(a.id)).slice(0, 10);
+  const newGames = [...allGames].reverse().slice(0, 10);
   
   const gamesByCategory = (catName: string) => {
-    return allGames.filter((g) => g.category.toLowerCase() === catName.toLowerCase()).slice(0, 15);
+    return allGames.filter((g) => g.category.toLowerCase() === catName.toLowerCase()).slice(0, 10);
   };
 
   const renderGameRow = (title: string, games: Game[], rowId: string, href: string) => {
