@@ -4,7 +4,7 @@ import { Game } from "@/types";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Use Vercel's URL from env variables if available, otherwise default to a preview URL
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://crazyarcade.vercel.app";
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.crazyarcade.online";
 
   const staticUrls = [
     {
