@@ -264,6 +264,10 @@ export default function Home() {
         <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-none w-full scroll-smooth">
           <Link
             href="/"
+            onClick={(e) => {
+              e.preventDefault();
+              router.push("/");
+            }}
             className={`rounded-full px-4 py-1.5 text-xs font-semibold whitespace-nowrap transition-all border ${
               !activeCategory && !activeFilter && !searchQuery
                 ? "bg-violet-600 border-violet-500 text-white shadow-lg shadow-violet-600/20"
@@ -276,6 +280,10 @@ export default function Home() {
             <Link
               key={cat.id}
               href={`/?category=${cat.id}`}
+              onClick={(e) => {
+                e.preventDefault();
+                router.push(`/?category=${cat.id}`);
+              }}
               className={`rounded-full px-4 py-1.5 text-xs font-semibold whitespace-nowrap transition-all border ${
                 activeCategory === cat.id
                   ? "bg-violet-600 border-violet-500 text-white shadow-lg shadow-violet-600/20"

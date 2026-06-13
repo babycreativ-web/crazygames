@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import {
   Home,
   Flame,
@@ -41,7 +41,9 @@ interface SidebarProps {
 
 export default function Sidebar({ isOpen, activeCategory, activeFilter }: SidebarProps) {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const search = searchParams.get("search");
+
 
   const mainFilters = [
     { id: "all", label: "Home", icon: Home, href: "/" },
@@ -108,6 +110,10 @@ export default function Sidebar({ isOpen, activeCategory, activeFilter }: Sideba
                 <Link
                   key={item.id}
                   href={item.href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    router.push(item.href);
+                  }}
                   className={`relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200 ${
                     active
                       ? "text-violet-400 bg-violet-500/5"
@@ -138,6 +144,10 @@ export default function Sidebar({ isOpen, activeCategory, activeFilter }: Sideba
                 <Link
                   key={item.id}
                   href={item.href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    router.push(item.href);
+                  }}
                   className={`relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200 ${
                     active
                       ? "text-violet-400 bg-violet-500/5"
@@ -168,6 +178,10 @@ export default function Sidebar({ isOpen, activeCategory, activeFilter }: Sideba
                 <Link
                   key={cat.id}
                   href={`/category/${cat.id}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    router.push(`/category/${cat.id}`);
+                  }}
                   className={`relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200 ${
                     active
                       ? "text-violet-400 bg-violet-500/5"
