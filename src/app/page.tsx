@@ -213,11 +213,11 @@ export default function Home() {
     if (games.length === 0) return null;
     return (
       <div key={rowId} className="relative group/row flex flex-col gap-2.5 animate-fadeIn">
-        <div className="flex items-center justify-between px-1">
-          <h3 className="text-lg font-bold text-slate-100 md:text-xl hover:text-violet-400 transition-colors tracking-tight">
-            <span>{title}</span>
+        <div className="flex items-baseline gap-3 px-1">
+          <h3 className="text-xl font-bold text-slate-100 md:text-2xl lg:text-[1.65rem] hover:text-violet-400 transition-colors tracking-tight">
+            {title}
           </h3>
-          <Link href={href} className="text-[11px] font-bold text-violet-400 hover:text-pink-400 transition-colors">
+          <Link href={href} className="text-xs font-semibold text-violet-400 hover:text-pink-400 transition-colors whitespace-nowrap">
             View more
           </Link>
         </div>
