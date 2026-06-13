@@ -22,9 +22,15 @@ function resolveCategoryName(id: string): string | null {
   if (slug === "shooting" || slug === "shooting-games") return "Shooting";
   if (slug === "sports" || slug === "sports-games") return "Sports";
   if (slug === "adventure" || slug === "adventure-games") return "Adventure";
-  if (slug === "multiplayer" || slug === "2-player" || slug === "2-player-games") return "Multiplayer";
-  if (slug === "dress-up" || slug === "girls-games" || slug === "dress-up-games") return "Dress Up";
-  if (slug === "beauty" || slug === "beauty-games") return "Beauty";
+  if (slug === "board" || slug === "board-games") return "Board";
+  if (slug === "card" || slug === "card-games") return "Card";
+  if (slug === "clicker" || slug === "clicker-games") return "Clicker";
+  if (slug === "io" || slug === "io-games" || slug === "dot-io") return ".io";
+  if (slug === "simulation" || slug === "simulation-games") return "Simulation";
+  if (slug === "strategy" || slug === "strategy-games") return "Strategy";
+  if (slug === "thinky" || slug === "thinky-games") return "Thinky";
+  if (slug === "trivia" || slug === "trivia-games") return "Trivia";
+  if (slug === "word" || slug === "word-games") return "Word";
   if (slug === "unblocked" || slug === "unblocked-games") return "Unblocked";
   
   return null;
@@ -80,15 +86,22 @@ export default async function CategoryPage({ params }: Props) {
   const articleHtml = seoEntry.article;
 
   const otherCategories = [
-    { slug: "arcade", name: "Arcade" },
     { slug: "action", name: "Action" },
-    { slug: "puzzle", name: "Puzzle" },
-    { slug: "driving", name: "Driving" },
-    { slug: "shooting", name: "Shooting" },
-    { slug: "sports", name: "Sports" },
     { slug: "adventure", name: "Adventure" },
-    { slug: "multiplayer", name: "Multiplayer" },
-    { slug: "dress-up", name: "Dress Up" }
+    { slug: "arcade", name: "Arcade" },
+    { slug: "board", name: "Board" },
+    { slug: "card", name: "Card" },
+    { slug: "clicker", name: "Clicker" },
+    { slug: "driving", name: "Driving" },
+    { slug: "io", name: ".io" },
+    { slug: "puzzle", name: "Puzzle" },
+    { slug: "shooting", name: "Shooting" },
+    { slug: "simulation", name: "Simulation" },
+    { slug: "sports", name: "Sports" },
+    { slug: "strategy", name: "Strategy" },
+    { slug: "thinky", name: "Thinky" },
+    { slug: "trivia", name: "Trivia" },
+    { slug: "word", name: "Word" }
   ].filter(c => c.name.toLowerCase() !== categoryName.toLowerCase());
 
   return (

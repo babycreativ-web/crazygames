@@ -19,6 +19,16 @@ import {
   Users,
   Grid,
   Skull,
+  ChessPawn,
+  Layers,
+  MousePointerClick,
+  CircleDot,
+  Puzzle,
+  Gamepad2,
+  Crown,
+  Ghost,
+  HelpCircle,
+  Type,
 } from "lucide-react";
 
 interface SidebarProps {
@@ -46,15 +56,22 @@ export default function Sidebar({ isOpen, activeCategory, activeFilter }: Sideba
   ];
 
   const categories = [
-    { id: "arcade", label: "Arcade", icon: Gamepad },
     { id: "action", label: "Action", icon: Zap },
-    { id: "puzzle", label: "Puzzle", icon: Brain },
-    { id: "driving", label: "Driving", icon: Car },
-    { id: "shooting", label: "Shooting", icon: Target },
-    { id: "sports", label: "Sports", icon: Trophy },
     { id: "adventure", label: "Adventure", icon: Compass },
-    { id: "multiplayer", label: "Multiplayer", icon: Users },
-    { id: "dress-up", label: "Dress Up", icon: Shirt },
+    { id: "arcade", label: "Arcade", icon: Gamepad },
+    { id: "board", label: "Board", icon: ChessPawn },
+    { id: "card", label: "Card", icon: Layers },
+    { id: "clicker", label: "Clicker", icon: MousePointerClick },
+    { id: "driving", label: "Driving", icon: Car },
+    { id: "io", label: ".io", icon: CircleDot },
+    { id: "puzzle", label: "Puzzle", icon: Puzzle },
+    { id: "shooting", label: "Shooting", icon: Target },
+    { id: "simulation", label: "Simulation", icon: Gamepad2 },
+    { id: "sports", label: "Sports", icon: Trophy },
+    { id: "strategy", label: "Strategy", icon: Crown },
+    { id: "thinky", label: "Thinky", icon: Ghost },
+    { id: "trivia", label: "Trivia", icon: HelpCircle },
+    { id: "word", label: "Word", icon: Type },
   ];
 
   const isFilterActive = (filterId: string) => {

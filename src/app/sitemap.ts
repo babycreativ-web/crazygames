@@ -16,15 +16,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ];
 
   const categorySlugs = [
-    "arcade",
     "action",
-    "puzzle",
-    "driving",
-    "shooting",
-    "sports",
     "adventure",
-    "multiplayer",
-    "dress-up",
+    "arcade",
+    "board",
+    "card",
+    "clicker",
+    "driving",
+    "io",
+    "puzzle",
+    "shooting",
+    "simulation",
+    "sports",
+    "strategy",
+    "thinky",
+    "trivia",
+    "word",
     "unblocked",
   ];
 

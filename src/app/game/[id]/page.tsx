@@ -17,13 +17,21 @@ function stripHtml(html: string): string {
 function getCategoryKeyword(category: string): string {
   const cat = category.toLowerCase();
   if (cat === "driving") return "Free Car Driving Game";
-  if (cat === "multiplayer") return "Free 2 Player Game";
   if (cat === "shooting") return "Free Shooting Game";
   if (cat === "action") return "Free Action Game";
   if (cat === "puzzle") return "Free IQ Puzzle Game";
   if (cat === "arcade") return "Free Arcade Game";
   if (cat === "sports") return "Free Sports Game";
-  if (cat === "dress-up") return "Free Girls Dress Up Game";
+  if (cat === "adventure") return "Free Adventure Game";
+  if (cat === "board") return "Free Online Board Game";
+  if (cat === "card") return "Free Online Card Game";
+  if (cat === "clicker") return "Free Clicker Idle Game";
+  if (cat === "io" || cat === ".io") return "Free Multiplayer .io Game";
+  if (cat === "simulation") return "Free Simulation Game";
+  if (cat === "strategy") return "Free Online Strategy Game";
+  if (cat === "thinky") return "Free Thinky Brain Game";
+  if (cat === "trivia") return "Free Online Trivia Quiz";
+  if (cat === "word") return "Free Online Word Game";
   return "Free Browser Game";
 }
 

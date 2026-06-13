@@ -144,14 +144,22 @@ export default function Home() {
   };
 
   const categories = [
-    { id: "Arcade", label: "Arcade" },
     { id: "Action", label: "Action" },
-    { id: "Puzzle", label: "Puzzle" },
-    { id: "Driving", label: "Driving" },
-    { id: "Shooting", label: "Shooting" },
-    { id: "Sports", label: "Sports" },
     { id: "Adventure", label: "Adventure" },
-    { id: "Multiplayer", label: "Multiplayer" },
+    { id: "Arcade", label: "Arcade" },
+    { id: "Board", label: "Board" },
+    { id: "Card", label: "Card" },
+    { id: "Clicker", label: "Clicker" },
+    { id: "Driving", label: "Driving" },
+    { id: "io", label: ".io" },
+    { id: "Puzzle", label: "Puzzle" },
+    { id: "Shooting", label: "Shooting" },
+    { id: "Simulation", label: "Simulation" },
+    { id: "Sports", label: "Sports" },
+    { id: "Strategy", label: "Strategy" },
+    { id: "Thinky", label: "Thinky" },
+    { id: "Trivia", label: "Trivia" },
+    { id: "Word", label: "Word" },
   ];
 
   return (

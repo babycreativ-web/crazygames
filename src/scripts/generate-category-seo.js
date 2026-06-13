@@ -5,15 +5,22 @@ const SEO_FILE = path.join(__dirname, "../data/categories-seo.json");
 const MODEL = "gemini-2.5-flash"; // Standard fast model
 
 const CATEGORIES = [
-  "Arcade",
   "Action",
-  "Puzzle",
-  "Driving",
-  "Shooting",
-  "Sports",
   "Adventure",
-  "Multiplayer",
-  "Dress Up"
+  "Arcade",
+  "Board",
+  "Card",
+  "Clicker",
+  "Driving",
+  ".io",
+  "Puzzle",
+  "Shooting",
+  "Simulation",
+  "Sports",
+  "Strategy",
+  "Thinky",
+  "Trivia",
+  "Word"
 ];
 
 async function generateCategorySeo() {

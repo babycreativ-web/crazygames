@@ -397,6 +397,214 @@ export function getOrGenerateCategorySeo(categoryName: string, gamesCount: numbe
       `;
       break;
 
+    case "board":
+      article = `
+        <h2>Classic Board Games Reimagined Online</h2>
+        <p>Board games have brought friends and families together for generations. At CrazyArcade, we bring these timeless classics straight to your web browser. From strategy-heavy board setups like chess and checkers to casual favorites like ludo and dominoes, our free online <strong>board games</strong> offer the perfect mix of strategic depth and casual fun. Play against intelligent AI opponents to hone your skills, or challenge friends to see who is the ultimate board master, all with no downloads or installs needed.</p>
+        
+        <h2>Why Play Browser Board Games?</h2>
+        <p>Playing board games online offers several unique advantages. You don't have to worry about missing pieces, complex setup times, or finding a physical partner to play with. Our HTML5 board games load in seconds on any device, automatically handle rule enforcement, and feature clean interfaces. Whether you are practicing your chess openings or enjoying a fast-paced game of ludo on your mobile phone, the experience is fluid and rewarding.</p>
+
+        <h2>Top Tips for Board Game Strategy</h2>
+        <ul>
+          <li><strong>Plan turns in advance:</strong> Board games are won by thinking ahead. Try to anticipate your opponent's moves two or three steps before they make them.</li>
+          <li><strong>Control the center:</strong> In spatial board games like Chess or Ludo, dominating the center of the board gives you more options and limits your opponent's movement.</li>
+          <li><strong>Stay patient:</strong> Avoid rushing. Wait for your opponent to make a mistake rather than making high-risk moves.</li>
+        </ul>
+
+        <h2>Frequently Asked Questions</h2>
+        <h3>Can I play board games with two players on the same screen?</h3>
+        <p>Yes, many of our board games feature local 2-player modes where you can share a screen and take turns.</p>
+        <h3>Do these games work on smartphones and tablets?</h3>
+        <p>Absolutely. All board games are designed with touch responsiveness, allowing you to drag and drop pieces easily on touchscreens.</p>
+      `;
+      break;
+
+    case "card":
+      article = `
+        <h2>Free Online Card Games - Solitaire & More</h2>
+        <p>Step into the virtual casino or enjoy a quiet game of Solitaire with our extensive collection of free online <strong>card games</strong>. Whether you love the solitary challenge of Klondike, Spider, and FreeCell, or prefer the tactical decision-making of Poker, Blackjack, and classic matching card games, CrazyArcade has you covered. Enjoy beautiful card designs, smooth animations, and automatic deck shuffling directly in your web browser with zero downloads required.</p>
+        
+        <h2>The Health Benefits of Playing Card Games</h2>
+        <p>Card games are not just fun—they are also excellent mental exercises. Games like Solitaire require attention to detail, spatial planning, and memory retention, helping keep your brain active. The casual pacing allows you to play at your own speed, making card games a wonderful, stress-free way to relax after work or school while keeping your cognitive skills sharp.</p>
+
+        <h2>Essential Tips for Card Game Players</h2>
+        <ul>
+          <li><strong>Expose hidden cards first:</strong> In Solitaire, prioritize moves that reveal face-down cards to unlock more play options.</li>
+          <li><strong>Understand the rules and odds:</strong> Before playing risk-based card games like Blackjack or Poker, familiarize yourself with hand rankings and simple probabilities.</li>
+          <li><strong>Don't get discouraged by bad shuffles:</strong> In Solitaire, not every deck is winnable. Focus on making the best choices with the cards you are dealt.</li>
+        </ul>
+
+        <h2>Frequently Asked Questions</h2>
+        <h3>Are these card games completely free?</h3>
+        <p>Yes, all card games on CrazyArcade are 100% free to play with no deposits, in-app purchases, or registration required.</p>
+        <h3>Can I play Solitaire on my mobile device?</h3>
+        <p>Yes. The card layouts are responsive and fully optimized for mobile browsers, making touch-to-drag cards feel natural.</p>
+      `;
+      break;
+
+    case "clicker":
+      article = `
+        <h2>Addictive Idle and Clicker Games</h2>
+        <p>If you love the satisfaction of watching numbers grow, our collection of free online <strong>clicker games</strong> and idle games will keep you hooked. Also known as incremental games, these titles start with a simple click and escalate into massive production empires. Hire helpers, purchase upgrades, and automate your resource collection. Watch your numbers reach billions while you sit back and enjoy the idle progression directly in your browser on CrazyArcade.</p>
+        
+        <h2>The Appeal of Clicker Games: Constant Progression</h2>
+        <p>Clicker games are designed around satisfying feedback loops. Every click generates resources, and every resource is spent on upgrades that make future clicks more powerful. Soon, the game automates itself, generating progress even when you aren't clicking. This constant feeling of growth and reward makes clicker games incredibly relaxing and satisfying to play in the background while you study or work.</p>
+
+        <h2>Tips for Maximizing Clicker Efficiency</h2>
+        <ul>
+          <li><strong>Balance active clicking with automation:</strong> Early on, active clicking is fastest. Transition to purchasing auto-clickers and passive income upgrades as soon as possible.</li>
+          <li><strong>Prioritize high-multiplier upgrades:</strong> Look at the cost-to-benefit ratio of upgrades. Focus on items that multiply your total output rather than just adding flat values.</li>
+          <li><strong>Reset when progress slows:</strong> Many clicker games feature a "prestige" system. Resetting your progress in exchange for permanent speed boosts is the key to reaching massive numbers.</li>
+        </ul>
+
+        <h2>Frequently Asked Questions</h2>
+        <h3>Do clicker games save my progress?</h3>
+        <p>Yes, clicker games use local browser storage to automatically save your progress so you can continue building your empire anytime.</p>
+        <h3>Can I play clicker games on my phone?</h3>
+        <p>Absolutely. Tap controls on mobile devices replace mouse clicks perfectly, making them excellent pocket games.</p>
+      `;
+      break;
+
+    case ".io":
+    case "io":
+      article = `
+        <h2>Enter the Arena: Free Multiplayer .io Games</h2>
+        <p>Take on the world in our high-energy collection of free online <strong>.io games</strong>. The .io genre has revolutionized browser gaming, offering instant multiplayer action, massive battle arenas, and simple gameplay loops. Start as a small dot or snake, collect food, and defeat other players to grow and dominate the server leaderboard. Jump into lobbies with players from all over the globe, with no download, installs, or registration required on CrazyArcade.</p>
+        
+        <h2>What Makes .io Games So Popular?</h2>
+        <p>The magic of .io games lies in their accessibility and immediate competition. You don't need a high-end gaming console or a complex installation. You simply type in a nickname and instantly spawn in a shared arena. The simple "eat and grow" mechanics are easy for anyone to understand, but surviving against hundreds of other active players requires fast reflexes and clever movement strategies.</p>
+
+        <h2>Top Strategies for Dominating .io Arenas</h2>
+        <ul>
+          <li><strong>Play defensively at the start:</strong> When you spawn, focus on gathering passive food resources and staying away from large players until you gain size.</li>
+          <li><strong>Use speed boosts wisely:</strong> Most .io games let you speed up at the cost of losing some size. Save boosts for escaping danger or securing a kill.</li>
+          <li><strong>Trap larger opponents:</strong> If you are quick, you can encircle or cut off larger, slower players to force them into a mistake and absorb their points.</li>
+        </ul>
+
+        <h2>Frequently Asked Questions</h2>
+        <h3>Are these .io games safe to play unblocked?</h3>
+        <p>Yes. All .io games run inside standard browser frames and are fully unblocked, making them safe for school and work networks.</p>
+        <h3>Do I need a high-speed connection?</h3>
+        <p>While .io games run smoothly, a stable internet connection will help minimize lag and ensure smooth real-time competitive matches.</p>
+      `;
+      break;
+
+    case "simulation":
+      article = `
+        <h2>Immersive Online Simulation Games</h2>
+        <p>Ever wanted to manage a restaurant, run a farm, or design outfits like a professional fashion designer? Our free online <strong>simulation games</strong> let you step into virtual roles and test your management skills. CrazyArcade features a wide variety of simulators, from cooking and business management to creative dress-up, makeup, and pet care games. Experience detailed mechanics and creative freedom directly in your browser.</p>
+        
+        <h2>The Fun of Creative and Management Simulators</h2>
+        <p>Simulation games provide a sandbox environment where you can learn new skills, express your style, and make decisions without any real-world consequences. Manage resources to grow a virtual business, or relax in style-focused makeovers where you can experiment with fashion. These games are designed to be therapeutic, rewarding, and highly engaging for players of all ages.</p>
+
+        <h2>Tips for Managing Simulation Challenges</h2>
+        <ul>
+          <li><strong>Understand the workflow:</strong> In management simulators, pay attention to the order of tasks. Developing a smooth rhythm is key to serving customers quickly.</li>
+          <li><strong>Invest in upgrades early:</strong> Spend your earnings on better equipment, faster tools, or more staff to automate tasks and increase efficiency.</li>
+          <li><strong>Take your time:</strong> Creative dress-up and styling simulators have no timers. Experiment with different colors and patterns to find your unique style.</li>
+        </ul>
+
+        <h2>Frequently Asked Questions</h2>
+        <h3>Are cooking and fashion games in the simulation category?</h3>
+        <p>Yes, cooking simulators and style makeovers are a major part of our simulation games collection, offering great creative play.</p>
+        <h3>Do I need to sign up to play?</h3>
+        <p>No, all simulation games are completely free and instantly playable directly on your browser.</p>
+      `;
+      break;
+
+    case "strategy":
+      article = `
+        <h2>Outsmart Your Opponent: Strategy Games</h2>
+        <p>Test your tactical mind and strategic planning with our selection of free online <strong>strategy games</strong>. Whether you enjoy defending bases in tower defense challenges, commanding armies in real-time wars, or taking turns to build empires, CrazyArcade has a strategy game for you. Plan your resource gathering, build fortifications, and outmaneuver opponents in tactical battles, all playable directly in your browser.</p>
+        
+        <h2>Why Strategy Games Build Critical Thinking</h2>
+        <p>Strategy games are the ultimate workout for your brain. They challenge you to manage resources, prioritize upgrades under pressure, and think several steps ahead. By forcing you to balance short-term defense with long-term economic growth, strategy games build decision-making skills and adaptability. Success in this genre is determined by intelligence, not just fast clicking.</p>
+
+        <h2>Essential Tips for Tower Defense and Strategy</h2>
+        <ul>
+          <li><strong>Focus on economy first:</strong> In long battles, building a strong resource base early gives you a massive advantage in the later stages.</li>
+          <li><strong>Create choke points:</strong> In tower defense games, place obstacles and defensive structures to funnel enemies into narrow corridors where your towers can deal maximum damage.</li>
+          <li><strong>Balance your units:</strong> Don't rely on a single unit type. Mix high-damage attackers, defensive tanks, and speed units to counter different enemy threats.</li>
+        </ul>
+
+        <h2>Frequently Asked Questions</h2>
+        <h3>Are these strategy games turn-based or real-time?</h3>
+        <p>We host a mix of both! You can find fast-paced real-time strategy (RTS) games as well as thoughtful turn-based tactical games.</p>
+        <h3>Can I play tower defense on mobile?</h3>
+        <p>Yes. Most tower defense games feature touch-to-place mechanics that work beautifully on tablets and smartphones.</p>
+      `;
+      break;
+
+    case "thinky":
+      article = `
+        <h2>Challenging Thinky & Logic Games</h2>
+        <p>Get ready for a serious workout for your brain with our selection of free online <strong>thinky games</strong>. This category is dedicated to logic puzzles, physics challenges, math riddles, and escape rooms that demand deep focus and creative problem-solving. At CrazyArcade, we believe games can be both incredibly fun and intellectually stimulating. Find clever solutions to complex problems with no downloads or installs required.</p>
+        
+        <h2>The Satisfaction of Solving Logic Puzzles</h2>
+        <p>Thinky games are designed around the "Aha!" moment—the feeling of satisfaction when a difficult puzzle clicks and you discover the solution. Unlike fast action games, thinky games allow you to go at your own pace, analyzing the board, experimenting with physics, and learning from failure. It is the perfect genre for players who love logic, science, and spatial deduction.</p>
+
+        <h2>Tips for Succeeding in Thinky Puzzles</h2>
+        <ul>
+          <li><strong>Experiment without fear:</strong> Don't be afraid to try things. Failing a puzzle level often teaches you how the mechanics interact and points you to the correct path.</li>
+          <li><strong>Break problems down:</strong> If a puzzle looks overwhelming, break it into smaller steps. Focus on clearing one obstacle or moving one block at a time.</li>
+          <li><strong>Take a break when stuck:</strong> Your brain continues to work on problems in the background. Taking a short walk can help you see the puzzle in a new light.</li>
+        </ul>
+
+        <h2>Frequently Asked Questions</h2>
+        <h3>Are thinky games good for kids?</h3>
+        <p>Yes. These logic and math puzzles are fantastic educational tools that help children develop problem-solving skills in a fun environment.</p>
+        <h3>Is my progress saved in level-based puzzles?</h3>
+        <p>Yes, progress is saved in your browser cookies/local storage so you can resume playing anytime.</p>
+      `;
+      break;
+
+    case "trivia":
+      article = `
+        <h2>Test Your Knowledge: Trivia & Quiz Games</h2>
+        <p>Are you a master of general knowledge, science, pop culture, or geography? Put your brain to the test with our collection of free online <strong>trivia games</strong> and quiz games. Challenge yourself with timed questions, guess the hidden objects, and see how many correct answers you can get in a row. Play trivia instantly on CrazyArcade directly in your web browser with no downloads needed.</p>
+        
+        <h2>Why Quiz Games are Great Fun</h2>
+        <p>Trivia games are the perfect blend of learning and entertainment. They allow you to test your memory, learn fascinating new facts, and compete against your own high scores or friends. Trivia is a great game category to play with family, as you can read questions aloud and work together to find the answers, making it a highly social and engaging experience.</p>
+
+        <h2>Tips for Scoring High in Trivia</h2>
+        <ul>
+          <li><strong>Use the process of elimination:</strong> If you don't know the answer, rule out the options that are obviously incorrect to increase your chances.</li>
+          <li><strong>Read the full question:</strong> Watch out for double negatives or trick phrasing. Taking an extra second to read carefully prevents silly mistakes.</li>
+          <li><strong>Play diverse quizzes:</strong> Expand your knowledge by playing trivia across different topics like history, science, sports, and movies.</li>
+        </ul>
+
+        <h2>Frequently Asked Questions</h2>
+        <h3>Are there educational quizzes for students?</h3>
+        <p>Yes, we host many trivia games focused on math, science, and spelling that are excellent for study breaks.</p>
+        <h3>Can I play trivia games on mobile?</h3>
+        <p>Absolutely. Large buttons and straightforward text layouts make trivia games highly responsive and fun on smartphones.</p>
+      `;
+      break;
+
+    case "word":
+      article = `
+        <h2>Free Online Word Games - Spelling & Puzzles</h2>
+        <p>Love crosswords, word searches, spelling bees, or anagrams? Challenge your vocabulary with our collection of free online <strong>word games</strong> on CrazyArcade. Find hidden words, connect letters to build vocabulary, and solve spelling puzzles directly in your browser. Rebuilt in HTML5, these word games run natively on your laptop, desktop, or mobile device with no installs required.</p>
+        
+        <h2>How Word Games Improve Vocabulary</h2>
+        <p>Playing word games regularly is an excellent way to expand your vocabulary and improve your spelling. By challenging you to recall letters and arrange them under different rules, word games keep your linguistic skills sharp. They are popular among language learners and word enthusiasts alike for their educational value and relaxing gameplay.</p>
+
+        <h2>Top Tips for Word Puzzle Success</h2>
+        <ul>
+          <li><strong>Look for common letter patterns:</strong> Focus on finding suffixes (like -ing, -ed, -er) and prefixes (like re-, un-, de-) to quickly form longer words.</li>
+          <li><strong>Start with vowels:</strong> Placements of A, E, I, O, U usually define the structure of a word. Find the vowels first, then fill in the consonants.</li>
+          <li><strong>Keep a dictionary mind:</strong> Practice anagrams by shuffling letters around. Seeing them in a circle or a different layout can spark ideas.</li>
+        </ul>
+
+        <h2>Frequently Asked Questions</h2>
+        <h3>Do these word games support multiple languages?</h3>
+        <p>Most games are in English, but we also host language puzzles that support Spanish, French, German, and other languages.</p>
+        <h3>Can I play crosswords on my phone?</h3>
+        <p>Yes, our word games feature responsive virtual keyboards and touch controls for seamless play on mobile screens.</p>
+      `;
+      break;
+
     default:
       article = `
         <h2>The Ultimate Free Online HTML5 Games Portal</h2>
