@@ -29,6 +29,7 @@ import {
   Ghost,
   HelpCircle,
   Type,
+  Mail,
 } from "lucide-react";
 
 interface SidebarProps {
@@ -175,17 +176,31 @@ export default function Sidebar({ isOpen, activeCategory, activeFilter }: Sideba
           </nav>
         </div>
 
-        {/* Info Block */}
-        <div className="mt-auto rounded-xl border border-white/5 bg-slate-900/40 p-4 text-center">
-          <div className="flex justify-center text-violet-400 mb-2">
-            <Grid className="h-6 w-6 animate-pulse" />
+        {/* Footer Links Area */}
+        <div className="mt-auto pt-4 flex flex-col gap-4 border-t border-white/5">
+          <a
+            href="mailto:babycreativ@gmail.com"
+            className="flex items-center justify-center gap-2 rounded-full bg-violet-600 px-4 py-2 text-sm font-bold text-white hover:bg-violet-500 transition-colors shadow-lg shadow-violet-600/20"
+          >
+            <Mail className="h-4 w-4" />
+            Contact us
+          </a>
+
+          <div className="flex flex-col gap-2 px-1">
+            <Link href="/about" className="text-xs text-slate-400 hover:text-slate-200 transition-colors">About</Link>
+            <Link href="/" className="text-xs text-slate-400 hover:text-slate-200 transition-colors">Developers</Link>
+            <Link href="/" className="text-xs text-slate-400 hover:text-slate-200 transition-colors">Kids site</Link>
+            <Link href="/" className="text-xs text-slate-400 hover:text-slate-200 transition-colors">Jobs</Link>
+            <Link href="/info-for-parents" className="text-xs text-slate-400 hover:text-slate-200 transition-colors">Info for parents</Link>
+            <Link href="/terms" className="text-xs text-slate-400 hover:text-slate-200 transition-colors">Terms &amp; conditions</Link>
+            <Link href="/privacy" className="text-xs text-slate-400 hover:text-slate-200 transition-colors">Privacy</Link>
+            <Link href="/?category=Action" className="text-xs text-slate-400 hover:text-slate-200 transition-colors">All games</Link>
           </div>
-          <span className="text-xs font-semibold text-slate-200 block mb-1">
-            Instant HTML5 Games
-          </span>
-          <p className="text-[10px] text-slate-500">
-            No downloads or installations required. Play directly on your browser.
-          </p>
+
+          {/* Copyright */}
+          <div className="pt-2 px-1">
+            <p className="text-[11px] text-slate-600">&copy; {new Date().getFullYear()} CrazyArcade</p>
+          </div>
         </div>
       </div>
     </aside>
