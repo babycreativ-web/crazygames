@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
+import Footer from "./Footer";
 import { useSearchParams } from "next/navigation";
 
 interface MainLayoutProps {
@@ -48,10 +49,14 @@ export default function MainLayout({ children }: MainLayoutProps) {
         )}
 
         {/* Content Area */}
-        <main className="flex-1 px-4 py-6 md:px-8 overflow-y-auto">
-          {children}
-        </main>
+        <div className="flex-1 flex flex-col overflow-y-auto">
+          <main className="flex-1 px-4 py-6 md:px-8">
+            {children}
+          </main>
+          <Footer />
+        </div>
       </div>
     </div>
   );
 }
+
