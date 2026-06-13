@@ -122,7 +122,7 @@ export default function Header({ onToggleSidebar, sidebarOpen }: HeaderProps) {
 
           <Link href="/" className="flex items-center gap-2.5 select-none group">
             {/* Cute Purple Monster Mascot with Horns & Joystick */}
-            <div className="flex h-11 w-11 items-center justify-center transition-transform duration-300 group-hover:scale-110">
+            <div className="flex h-14 w-14 items-center justify-center transition-transform duration-300 group-hover:scale-110">
               <svg viewBox="0 0 100 100" className="h-full w-full">
                 {/* Shadow */}
                 <ellipse cx="50" cy="85" rx="30" ry="6" fill="rgba(0,0,0,0.35)" />
@@ -154,8 +154,8 @@ export default function Header({ onToggleSidebar, sidebarOpen }: HeaderProps) {
             </div>
             {/* Typography */}
             <div className="flex flex-col font-fredoka leading-[0.9] text-white">
-              <span className="text-[19px] font-bold tracking-tight text-white">crazy</span>
-              <span className="text-[19px] font-bold tracking-tight text-white">arcade</span>
+              <span className="text-[22px] font-bold tracking-tight text-white">crazy</span>
+              <span className="text-[22px] font-bold tracking-tight text-white">arcade</span>
             </div>
           </Link>
         </div>
