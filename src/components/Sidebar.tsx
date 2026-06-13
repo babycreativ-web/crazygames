@@ -115,7 +115,11 @@ export default function Sidebar({ isOpen, activeCategory, activeFilter }: Sideba
                   href={item.href}
                   onClick={(e) => {
                     e.preventDefault();
-                    router.push(item.href);
+                    if (item.href === "/") {
+                      window.location.href = "/";
+                    } else {
+                      router.push(item.href);
+                    }
                   }}
                   className={`relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200 ${
                     active

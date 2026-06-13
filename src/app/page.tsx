@@ -266,7 +266,7 @@ export default function Home() {
             href="/"
             onClick={(e) => {
               e.preventDefault();
-              router.push("/");
+              window.location.href = "/";
             }}
             className={`rounded-full px-4 py-1.5 text-xs font-semibold whitespace-nowrap transition-all border ${
               !activeCategory && !activeFilter && !searchQuery
