@@ -108,20 +108,23 @@ export default function Sidebar({ isOpen, activeCategory, activeFilter }: Sideba
                 <Link
                   key={item.id}
                   href={item.href}
-                  className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200 ${
+                  className={`relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200 ${
                     active
-                      ? "bg-gradient-to-r from-violet-600 to-pink-500 text-white shadow-lg shadow-violet-500/10"
+                      ? "text-violet-400 bg-violet-500/5"
                       : "text-slate-400 hover:bg-white/5 hover:text-slate-200"
                   }`}
                 >
-                  <Icon className="h-4.5 w-4.5" />
+                  {active && (
+                    <span className="absolute left-0 top-1/2 -translate-y-1/2 h-5 w-1 rounded-r-full bg-violet-500" />
+                  )}
+                  <Icon className="h-[22px] w-[22px] shrink-0" />
                   <span>{item.label}</span>
                 </Link>
               );
             })}
           </nav>
         </div>
-
+ 
         {/* Viral Playlists Navigation */}
         <div>
           <h2 className="px-3 text-xs font-bold uppercase tracking-wider text-slate-500">
@@ -135,20 +138,23 @@ export default function Sidebar({ isOpen, activeCategory, activeFilter }: Sideba
                 <Link
                   key={item.id}
                   href={item.href}
-                  className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200 ${
+                  className={`relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200 ${
                     active
-                      ? "bg-gradient-to-r from-violet-600 to-pink-500 text-white shadow-lg shadow-violet-500/10"
+                      ? "text-violet-400 bg-violet-500/5"
                       : "text-slate-400 hover:bg-white/5 hover:text-slate-200"
                   }`}
                 >
-                  <Icon className="h-4.5 w-4.5" />
+                  {active && (
+                    <span className="absolute left-0 top-1/2 -translate-y-1/2 h-5 w-1 rounded-r-full bg-violet-500" />
+                  )}
+                  <Icon className="h-[22px] w-[22px] shrink-0" />
                   <span>{item.label}</span>
                 </Link>
               );
             })}
           </nav>
         </div>
-
+ 
         {/* Categories Navigation */}
         <div>
           <h2 className="px-3 text-xs font-bold uppercase tracking-wider text-slate-500">
@@ -162,13 +168,16 @@ export default function Sidebar({ isOpen, activeCategory, activeFilter }: Sideba
                 <Link
                   key={cat.id}
                   href={`/category/${cat.id}`}
-                  className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200 ${
+                  className={`relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200 ${
                     active
-                      ? "bg-gradient-to-r from-violet-600 to-pink-500 text-white shadow-lg shadow-violet-500/10"
+                      ? "text-violet-400 bg-violet-500/5"
                       : "text-slate-400 hover:bg-white/5 hover:text-slate-200"
                   }`}
                 >
-                  <Icon className="h-4.5 w-4.5" />
+                  {active && (
+                    <span className="absolute left-0 top-1/2 -translate-y-1/2 h-5 w-1 rounded-r-full bg-violet-500" />
+                  )}
+                  <Icon className="h-[22px] w-[22px] shrink-0" />
                   <span>{cat.label}</span>
                 </Link>
               );
