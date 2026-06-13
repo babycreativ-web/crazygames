@@ -114,13 +114,43 @@ export default function Header({ onToggleSidebar, sidebarOpen }: HeaderProps) {
           {sidebarOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
 
-        <Link href="/" className="flex items-center gap-2 font-black text-xl tracking-wider select-none">
-          <div className="flex items-center justify-center rounded-lg bg-gradient-to-br from-violet-600 to-pink-500 p-1.5 shadow-lg shadow-violet-500/20">
-            <Gamepad2 className="h-5 w-5 text-white" />
+        <Link href="/" className="flex items-center gap-2 select-none group">
+          {/* Cute Purple Monster Mascot with Horns & Joystick */}
+          <div className="flex h-9 w-9 items-center justify-center transition-transform duration-300 group-hover:scale-110">
+            <svg viewBox="0 0 100 100" className="h-full w-full">
+              {/* Shadow */}
+              <ellipse cx="50" cy="85" rx="30" ry="6" fill="rgba(0,0,0,0.35)" />
+              {/* Body */}
+              <path d="M 20 45 C 20 20, 80 20, 80 45 C 80 65, 75 80, 50 80 C 25 80, 20 65, 20 45 Z" fill="url(#purpleGrad)" />
+              {/* Horns */}
+              <path d="M 22 26 L 12 12 C 16 22, 22 26, 22 26 Z" fill="#4f46e5" />
+              <path d="M 78 26 L 88 12 C 84 22, 78 26, 78 26 Z" fill="#4f46e5" />
+              {/* Eyes */}
+              <circle cx="38" cy="45" r="13" fill="white" />
+              <circle cx="62" cy="45" r="13" fill="white" />
+              {/* Pupils */}
+              <circle cx="42" cy="47" r="6.5" fill="#1e1b4b" />
+              <circle cx="58" cy="47" r="6.5" fill="#1e1b4b" />
+              {/* Blush */}
+              <circle cx="28" cy="56" r="4" fill="#ec4899" opacity="0.6" />
+              <circle cx="72" cy="56" r="4" fill="#ec4899" opacity="0.6" />
+              {/* Joystick badge on bottom right */}
+              <circle cx="74" cy="74" r="15" fill="#f59e0b" stroke="#0f172a" strokeWidth="3" />
+              <line x1="74" y1="74" x2="80" y2="65" stroke="#0f172a" strokeWidth="4" strokeLinecap="round" />
+              <circle cx="80" cy="65" r="5" fill="#ef4444" stroke="#0f172a" strokeWidth="2" />
+              <defs>
+                <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#a78bfa" />
+                  <stop offset="100%" stopColor="#6d28d9" />
+                </linearGradient>
+              </defs>
+            </svg>
           </div>
-          <span className="bg-gradient-to-r from-violet-400 via-pink-400 to-orange-400 bg-clip-text text-transparent glow-on-hover transition-all duration-300">
-            CRAZYARCADE
-          </span>
+          {/* Typography */}
+          <div className="flex flex-col font-fredoka leading-[0.9] text-white">
+            <span className="text-[17px] font-bold tracking-tight text-white">crazy</span>
+            <span className="text-[17px] font-bold tracking-tight text-white">arcade</span>
+          </div>
         </Link>
       </div>
 

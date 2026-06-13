@@ -24,6 +24,7 @@
   --color-dark-card: var(--dark-card);
   --color-dark-hover: var(--dark-hover);
   --color-text-muted: var(--text-muted);
+  --font-fredoka: var(--font-fredoka);
 }
 
 body {
