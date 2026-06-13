@@ -44,6 +44,9 @@ export default function Sidebar({ isOpen, activeCategory, activeFilter }: Sideba
   const router = useRouter();
   const search = searchParams.get("search");
 
+  // Read active state directly from search parameters to bypass Layout caching
+  const currentCategory = searchParams.get("category") || undefined;
+  const currentFilter = searchParams.get("filter") || undefined;
 
   const mainFilters = [
     { id: "all", label: "Home", icon: Home, href: "/" },
@@ -80,14 +83,14 @@ export default function Sidebar({ isOpen, activeCategory, activeFilter }: Sideba
   const isFilterActive = (filterId: string) => {
     if (search) return false;
     if (filterId === "all") {
-      return !activeFilter && !activeCategory;
+      return !currentFilter && !currentCategory;
     }
-    return activeFilter === filterId;
+    return currentFilter === filterId;
   };
 
   const isCategoryActive = (catId: string) => {
     if (search) return false;
-    return activeCategory?.toLowerCase() === catId.toLowerCase();
+    return currentCategory?.toLowerCase() === catId.toLowerCase();
   };
 
   return (
