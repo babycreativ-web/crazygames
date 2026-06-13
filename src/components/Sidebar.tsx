@@ -191,7 +191,7 @@ export default function Sidebar({ isOpen, activeCategory, activeFilter }: Sideba
             <Link href="/info-for-parents" className="text-xs text-slate-400 hover:text-slate-200 transition-colors">Info for parents</Link>
             <Link href="/terms" className="text-xs text-slate-400 hover:text-slate-200 transition-colors">Terms &amp; conditions</Link>
             <Link href="/privacy" className="text-xs text-slate-400 hover:text-slate-200 transition-colors">Privacy</Link>
-            <Link href="/?category=Action" className="text-xs text-slate-400 hover:text-slate-200 transition-colors">All games</Link>
+            <Link href="/" className="text-xs text-slate-400 hover:text-slate-200 transition-colors">All games</Link>
           </div>
 
           {/* Copyright */}
