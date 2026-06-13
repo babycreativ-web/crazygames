@@ -188,9 +188,6 @@ export default function Sidebar({ isOpen, activeCategory, activeFilter }: Sideba
 
           <div className="flex flex-col gap-2 px-1">
             <Link href="/about" className="text-xs text-slate-400 hover:text-slate-200 transition-colors">About</Link>
-            <Link href="/" className="text-xs text-slate-400 hover:text-slate-200 transition-colors">Developers</Link>
-            <Link href="/" className="text-xs text-slate-400 hover:text-slate-200 transition-colors">Kids site</Link>
-            <Link href="/" className="text-xs text-slate-400 hover:text-slate-200 transition-colors">Jobs</Link>
             <Link href="/info-for-parents" className="text-xs text-slate-400 hover:text-slate-200 transition-colors">Info for parents</Link>
             <Link href="/terms" className="text-xs text-slate-400 hover:text-slate-200 transition-colors">Terms &amp; conditions</Link>
             <Link href="/privacy" className="text-xs text-slate-400 hover:text-slate-200 transition-colors">Privacy</Link>
