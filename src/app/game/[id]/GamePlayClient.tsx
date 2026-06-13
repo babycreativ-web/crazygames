@@ -406,7 +406,7 @@ export default function GamePlayClient({
       <div className="w-full lg:w-80 shrink-0 flex flex-col gap-6">
         <div className="flex items-center gap-2 border-b border-white/5 pb-3">
           <Sparkles className="h-4.5 w-4.5 text-violet-400 animate-pulse" />
-          <h2 className="text-md font-bold tracking-tight text-white">Recommended Games</h2>
+          <h2 className="text-lg font-bold tracking-tight text-white">Recommended Games</h2>
         </div>
 
         {relatedGames.length > 0 ? (

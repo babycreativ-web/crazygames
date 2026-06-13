@@ -128,7 +128,7 @@ export default async function CategoryPage({ params }: Props) {
       {/* Grid of games */}
       <div className="flex flex-col gap-6">
         <div className="flex items-center justify-between border-b border-white/5 pb-4">
-          <h2 className="text-lg font-bold text-white flex items-center gap-2">
+          <h2 className="text-xl md:text-2xl font-bold tracking-tight text-white flex items-center gap-2">
             <Gamepad className="h-5 w-5 text-violet-400" />
             <span>Play Now ({categoryGames.length} games)</span>
           </h2>

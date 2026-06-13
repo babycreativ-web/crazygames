@@ -214,7 +214,7 @@ export default function Home() {
     return (
       <div key={rowId} className="relative group/row flex flex-col gap-2.5 animate-fadeIn">
         <div className="flex items-center justify-between px-1">
-          <h3 className="text-sm font-bold text-white md:text-base hover:text-violet-400 transition-colors">
+          <h3 className="text-lg font-bold text-slate-100 md:text-xl hover:text-violet-400 transition-colors tracking-tight">
             <span>{title}</span>
           </h3>
           <Link href={href} className="text-[11px] font-bold text-violet-400 hover:text-pink-400 transition-colors">
@@ -372,7 +372,7 @@ export default function Home() {
           <div className="flex items-center justify-between border-b border-white/5 pb-3">
             <div className="flex items-center gap-2.5">
               {getPageIcon()}
-              <h2 className="text-base font-bold tracking-tight text-white md:text-lg">
+              <h2 className="text-lg font-bold tracking-tight text-white md:text-xl">
                 {getPageTitle()}
               </h2>
               <span className="rounded-full bg-slate-900 border border-white/5 px-2.5 py-0.5 text-[10px] text-slate-400">

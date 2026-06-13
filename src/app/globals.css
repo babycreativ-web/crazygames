@@ -93,3 +93,8 @@ body {
 .glow-on-hover:hover {
   text-shadow: 0 0 8px rgba(139, 92, 246, 0.6);
 }
+
+/* Global Heading Font styling */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-fredoka), system-ui, -apple-system, sans-serif;
+}
