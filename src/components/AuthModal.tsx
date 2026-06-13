@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { useAuth } from "@/context/AuthContext";
 import { X, Gamepad2, AlertCircle, Loader2 } from "lucide-react";
 
@@ -13,8 +14,15 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
   const { loginWithGoogle } = useAuth();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    return () => setMounted(false);
+  }, []);
 
   if (!isOpen) return null;
+  if (!mounted) return null;
 
   const handleGoogleLogin = async () => {
     setError(null);
@@ -35,8 +43,8 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
     }
   };
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+  return createPortal(
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
       {/* Backdrop backdrop blur */}
       <div 
         className="absolute inset-0 bg-slate-950/60 backdrop-blur-sm transition-opacity"
@@ -44,7 +52,8 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
       />
 
       {/* Modal Container */}
-      <div className="relative w-full max-w-md overflow-hidden rounded-3xl border border-white/10 bg-slate-900/80 p-6 md:p-8 shadow-2xl backdrop-blur-xl animate-in fade-in zoom-in-95 duration-200">
+      <div className="relative w-full max-w-md overflow-hidden rounded-3xl border border-white/10 bg-slate-900/90 p-6 md:p-8 shadow-2xl backdrop-blur-xl animate-in fade-in zoom-in-95 duration-200">
+
         
         {/* Decorative Gradients */}
         <div className="absolute -right-20 -top-20 h-40 w-40 rounded-full bg-violet-600/20 blur-3xl -z-10"></div>
@@ -109,6 +118,8 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
         </div>
 
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
+
